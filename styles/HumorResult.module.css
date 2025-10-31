@@ -1,0 +1,185 @@
+.container {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.65), rgba(226, 232, 240, 0.6));
+  border-radius: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 15px 60px rgba(15, 23, 42, 0.08);
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: minmax(0, 320px) 1fr;
+    align-items: start;
+  }
+}
+
+.badgeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.typeSummary {
+  display: grid;
+  gap: 0.75rem;
+  color: #0f172a;
+}
+
+.typeSummary h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(15, 23, 42, 0.04);
+}
+
+.tabButton {
+  flex: 1 1 120px;
+  border: none;
+  border-radius: 9999px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabButton:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.tabButtonActive {
+  color: #0f172a;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.tabPanel {
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1.5rem;
+  box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.12);
+}
+
+.tabPanel h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #0f172a;
+}
+
+.tabPanel p,
+.tabPanel li {
+  color: #334155;
+  line-height: 1.7;
+}
+
+.tabPanel ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.axisGrid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .axisGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.axisCard {
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.12), rgba(226, 232, 240, 0.2));
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.axisCard span:first-of-type {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.axisProgress {
+  position: relative;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.35);
+  overflow: hidden;
+}
+
+.axisProgressFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(30, 41, 59, 0.8));
+    border-color: rgba(71, 85, 105, 0.4);
+    box-shadow: 0 20px 70px rgba(2, 6, 23, 0.45);
+  }
+
+  .typeSummary,
+  .typeSummary h2,
+  .tabPanel h3 {
+    color: #e2e8f0;
+  }
+
+  .tabs {
+    background-color: rgba(148, 163, 184, 0.18);
+  }
+
+  .tabButton {
+    color: #cbd5f5;
+  }
+
+  .tabButtonActive {
+    color: #f8fafc;
+    background: rgba(148, 163, 184, 0.25);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
+  }
+
+  .tabPanel {
+    background: rgba(15, 23, 42, 0.7);
+    box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.18);
+  }
+
+  .tabPanel p,
+  .tabPanel li {
+    color: #e2e8f0;
+  }
+
+  .axisCard {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(14, 116, 144, 0.24));
+  }
+
+  .axisProgress {
+    background: rgba(148, 163, 184, 0.35);
+  }
+
+  .axisProgressFill {
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+  }
+}
