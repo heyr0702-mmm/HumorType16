@@ -1,117 +1,89 @@
 .container {
   display: grid;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.65), rgba(226, 232, 240, 0.6));
-  border-radius: 1.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  box-shadow: 0 15px 60px rgba(15, 23, 42, 0.08);
-}
-
-@media (min-width: 768px) {
-  .container {
-    grid-template-columns: minmax(0, 320px) 1fr;
-    align-items: start;
-  }
+  gap: clamp(2rem, 3vw, 3rem);
+  padding: clamp(2rem, 5vw, 4rem);
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.8), rgba(248, 250, 252, 0.95));
+  border-radius: 32px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 25px 45px rgba(15, 23, 42, 0.12);
 }
 
 .badgeSection {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
   align-items: center;
-  gap: 1.25rem;
-  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .badgeSection {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
 }
 
 .typeSummary {
   display: grid;
   gap: 0.75rem;
-  color: #0f172a;
 }
 
 .typeSummary h2 {
-  font-size: 1.75rem;
+  font-size: clamp(2rem, 3vw, 2.75rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.typeSummary p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #334155;
 }
 
 .tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 9999px;
-  background-color: rgba(15, 23, 42, 0.04);
+  gap: 0.75rem;
 }
 
 .tabButton {
-  flex: 1 1 120px;
-  border: none;
-  border-radius: 9999px;
-  padding: 0.5rem 1.25rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #475569;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tabButton:focus-visible {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
+  composes: tab;
 }
 
 .tabButtonActive {
-  color: #0f172a;
-  background: #ffffff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  composes: tab;
+  background: #0ea5e9;
+  color: #f8fafc;
+  box-shadow: 0 12px 24px rgba(14, 165, 233, 0.35);
 }
 
 .tabPanel {
-  border-radius: 1.25rem;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 1.5rem;
-  box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.12);
-}
-
-.tabPanel h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: #0f172a;
-}
-
-.tabPanel p,
-.tabPanel li {
-  color: #334155;
-  line-height: 1.7;
-}
-
-.tabPanel ul {
   display: grid;
-  gap: 0.5rem;
-  padding-left: 1.25rem;
-  margin: 0;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  border: 1px solid rgba(203, 213, 225, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 20px 40px rgba(15, 23, 42, 0.08);
 }
 
 .axisGrid {
   display: grid;
-  gap: 0.75rem;
+  gap: 1.5rem;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .axisGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 
 .axisCard {
-  background: linear-gradient(135deg, rgba(148, 163, 184, 0.12), rgba(226, 232, 240, 0.2));
-  border-radius: 1rem;
-  padding: 1rem 1.25rem;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.9), rgba(255, 255, 255, 0.9));
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 14px 28px rgba(148, 163, 184, 0.25);
 }
 
 .axisCard span:first-of-type {
@@ -121,9 +93,9 @@
 
 .axisProgress {
   position: relative;
-  height: 0.5rem;
-  border-radius: 9999px;
-  background: rgba(148, 163, 184, 0.35);
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.3);
   overflow: hidden;
 }
 
@@ -131,55 +103,185 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, #2563eb, #38bdf8);
+  background: linear-gradient(135deg, #38bdf8, #c084fc);
+  transition: width 200ms ease;
 }
 
 @media (prefers-color-scheme: dark) {
   .container {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(30, 41, 59, 0.8));
-    border-color: rgba(71, 85, 105, 0.4);
-    box-shadow: 0 20px 70px rgba(2, 6, 23, 0.45);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.95));
+    border-color: rgba(71, 85, 105, 0.45);
+    box-shadow: 0 25px 45px rgba(15, 23, 42, 0.55);
   }
 
-  .typeSummary,
-  .typeSummary h2,
-  .tabPanel h3 {
-    color: #e2e8f0;
+  .typeSummary h2 {
+    color: #f8fafc;
   }
 
-  .tabs {
-    background-color: rgba(148, 163, 184, 0.18);
-  }
-
-  .tabButton {
+  .typeSummary p {
     color: #cbd5f5;
   }
 
-  .tabButtonActive {
-    color: #f8fafc;
-    background: rgba(148, 163, 184, 0.25);
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.3);
-  }
-
   .tabPanel {
-    background: rgba(15, 23, 42, 0.7);
-    box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.18);
-  }
-
-  .tabPanel p,
-  .tabPanel li {
-    color: #e2e8f0;
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(71, 85, 105, 0.4);
+    box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.12), 0 20px 40px rgba(15, 23, 42, 0.5);
   }
 
   .axisCard {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(14, 116, 144, 0.24));
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95));
+    border-color: rgba(51, 65, 85, 0.6);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.5);
+  }
+
+  .axisCard span:first-of-type {
+    color: #e2e8f0;
   }
 
   .axisProgress {
-    background: rgba(148, 163, 184, 0.35);
+    background: rgba(71, 85, 105, 0.5);
   }
 
   .axisProgressFill {
-    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    background: linear-gradient(135deg, #38bdf8, #a855f7);
+  }
+}
+.hero {
+  position: relative;
+  padding: 3.5rem clamp(1.5rem, 4vw, 3rem);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(217, 70, 239, 0.12)),
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.35), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(192, 38, 211, 0.35), transparent 55%),
+    #ffffff;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
+  overflow: hidden;
+  color: #0f172a;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(217, 70, 239, 0.2));
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+
+.hero:hover::before {
+  opacity: 1;
+}
+
+.ribbon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.08);
+  color: #0f766e;
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.ribbon::before {
+  content: "★";
+  font-size: 0.85rem;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(59, 130, 246, 0.15));
+  border: 3px solid rgba(37, 99, 235, 0.3);
+  color: #1d4ed8;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  box-shadow: 0 18px 35px rgba(59, 130, 246, 0.25);
+}
+
+.badge span {
+  display: block;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #334155;
+  background: rgba(148, 163, 184, 0.15);
+  border: 1px solid transparent;
+  transition: all 200ms ease;
+  cursor: pointer;
+}
+
+.tab:hover,
+.tab:focus-visible {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0369a1;
+  border-color: rgba(14, 165, 233, 0.3);
+  outline: none;
+}
+
+.tab[aria-selected="true"] {
+  background: #0ea5e9;
+  color: #f8fafc;
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.35);
+}
+
+@media (prefers-color-scheme: dark) {
+  .hero {
+    color: #f8fafc;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(217, 70, 239, 0.2)),
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.4), transparent 60%),
+      radial-gradient(circle at bottom right, rgba(192, 38, 211, 0.4), transparent 60%),
+      #0f172a;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.6);
+  }
+
+  .ribbon {
+    background: rgba(20, 184, 166, 0.12);
+    color: #5eead4;
+    border-color: rgba(45, 212, 191, 0.4);
+    box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.12);
+  }
+
+  .badge {
+    background: linear-gradient(135deg, rgba(125, 211, 252, 0.12), rgba(129, 140, 248, 0.12));
+    border-color: rgba(96, 165, 250, 0.35);
+    color: #bfdbfe;
+    box-shadow: 0 18px 35px rgba(30, 64, 175, 0.45);
+  }
+
+  .tab {
+    background: rgba(148, 163, 184, 0.12);
+    color: #e2e8f0;
+  }
+
+  .tab:hover,
+  .tab:focus-visible {
+    background: rgba(14, 165, 233, 0.18);
+    color: #bae6fd;
+    border-color: rgba(14, 165, 233, 0.4);
+  }
+
+  .tab[aria-selected="true"] {
+    background: #0284c7;
+    box-shadow: 0 12px 28px rgba(2, 132, 199, 0.45);
   }
 }
