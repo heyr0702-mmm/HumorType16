@@ -10,10 +10,10 @@ const QUESTIONS_PER_PAGE = 5;
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
 
 const AXIS_LABELS: Record<AxisKey, string> = {
-  energy: "Expressive energy",
-  absurdity: "Absurdist flair",
-  tone: "Tone balance",
-  structure: "Structural play",
+  energy: "表現・エネルギー軸",
+  absurdity: "発想・抽象度軸",
+  tone: "トーン（論理／共感）軸",
+  structure: "構成・ノリ軸",
 };
 
 function computeAxisScores(
@@ -135,17 +135,16 @@ export default function HumorTestWizard() {
   return (
     <>
       <Head>
-        <title>HumorType16 – Test</title>
-        <meta name="description" content="Discover your HumorType16 profile with our playful wizard." />
+        <title>HumorType16 – 診断テスト</title>
+        <meta name="description" content="30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。" />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100">
         <div className="mx-auto flex max-w-5xl flex-col gap-10">
           <header className="flex flex-col gap-4 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-slate-50">HumorType16 Preview Wizard</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-slate-50">HumorType16 診断テスト</h1>
             <p className="mx-auto max-w-2xl text-lg text-slate-300">
-              Answer a few questions per step to sketch your comedy instincts. Your provisional family badge updates as you go,
-              and you can review your results at the end.
+              30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。
             </p>
           </header>
 
@@ -153,7 +152,7 @@ export default function HumorTestWizard() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex flex-1 flex-col gap-4">
                 <div>
-                  <p className="text-sm uppercase tracking-wider text-slate-400">Progress</p>
+                  <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
                   <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
@@ -161,7 +160,7 @@ export default function HumorTestWizard() {
                     />
                   </div>
                   <p className="mt-2 text-sm font-medium text-slate-200">
-                    {answeredCount} of {totalQuestions} questions answered ({progressPercent}%)
+                    回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
                   </p>
                 </div>
 
@@ -185,8 +184,9 @@ export default function HumorTestWizard() {
                 </div>
               </div>
 
-              <div className="flex justify-center">
-                <HumorCharacterBadge code={provisionalFamily} headline="Provisional Family" />
+              <div className="flex flex-col items-center justify-center text-center">
+                <HumorCharacterBadge code={provisionalFamily} headline="仮タイプ（途中診断）" />
+                <p className="mt-3 text-xs text-slate-400">回答が進むとここが更新されます。</p>
               </div>
             </div>
           </section>
@@ -194,9 +194,9 @@ export default function HumorTestWizard() {
           <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
             <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
               <p className="text-sm font-medium text-slate-300">
-                Step {currentPage + 1} of {totalPages}
+                ステップ {currentPage + 1} / {totalPages}
               </p>
-              <p className="text-sm text-slate-400">Questions {start + 1}–{Math.min(totalQuestions, end)}</p>
+              <p className="text-sm text-slate-400">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
             </div>
 
             <div className="mt-6 grid gap-6">
@@ -212,7 +212,7 @@ export default function HumorTestWizard() {
 
               {pageQuestions.length === 0 ? (
                 <p className="text-center text-slate-400">
-                  Question data is being prepared. Check back soon for the full HumorType16 experience!
+                  質問データを準備中です。HumorType16 の完全版をお楽しみに！
                 </p>
               ) : null}
             </div>
@@ -224,7 +224,7 @@ export default function HumorTestWizard() {
                 onClick={handleBack}
                 disabled={currentPage === 0}
               >
-                Back
+                前のページへ
               </button>
               <button
                 type="button"
@@ -232,7 +232,7 @@ export default function HumorTestWizard() {
                 onClick={handleNext}
                 disabled={!canGoNext || totalQuestions === 0}
               >
-                {isFinalPage ? "View your humor profile" : "Next"}
+                {isFinalPage ? "診断結果を見る" : "次のページへ"}
               </button>
             </div>
           </section>
