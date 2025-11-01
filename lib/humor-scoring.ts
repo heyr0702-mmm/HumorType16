@@ -14,11 +14,12 @@ const FAMILY_LABELS: Record<string, string> = {
   IC: "Introspective Classicists",
 };
 
+// NOTE: The Likert scale responses range from 1 to 7 and are centered on 4.
 export function mapLikertToSigned(value: number): number {
-  if (value < 1 || value > 5) {
-    throw new RangeError(`Likert values must be between 1 and 5. Received: ${value}`);
+  if (value < 1 || value > 7) {
+    throw new RangeError(`Likert values must be between 1〜7. Received: ${value}`);
   }
-  return value - 3;
+  return value - 4;
 }
 
 export function computeAxisScores(
