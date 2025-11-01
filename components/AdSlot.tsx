@@ -21,6 +21,7 @@ export default function AdSlot({ className, adSlot, ...rest }: AdSlotProps) {
 
   return (
     <div className={containerClassName} {...rest}>
+      {/* TODO: Read data-ad-client value from an environment variable. */}
       <ins
         className="adsbygoogle block w-full"
         style={{ display: "block" }}
