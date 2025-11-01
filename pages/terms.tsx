@@ -6,7 +6,7 @@ const sections = [
     title: "適用",
     body: (
       <p className="leading-7 text-gray-700">
-        本利用規約（以下、「本規約」といいます。）は、HumorType16（以下、「当サイト」といいます。）の提供するサービスを利用するすべての方に適用されます。利用者は本規約に同意のうえ、当サイトを利用するものとします。
+        本利用規約（以下、「本規約」といいます。）は、HumorType16運営チーム（以下「当チーム」といいます。）が提供・運営する HumorType16（以下、「当サイト」といいます。）のサービスを利用するすべての方に適用されます。利用者は本規約に同意のうえ、当サイトを利用するものとします。
       </p>
     ),
   },
@@ -38,10 +38,28 @@ const sections = [
     body: (
       <div className="space-y-4 text-gray-700">
         <p className="leading-7">
-          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。広告配信事業者は Cookie を使用し、利用者の興味に応じた広告を表示する場合があります。
+          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。
         </p>
         <p className="leading-7">
-          Cookie により収集される情報には個人を特定できる内容は含まれませんが、利用者はブラウザの設定から Cookie の使用を無効化することができます。詳細は Google の広告ポリシーおよびプライバシーポリシーをご確認ください。
+          広告配信事業者は Cookie を使用して、利用者の興味・関心に応じた広告を表示する場合があります。Cookie の利用はブラウザの設定や
+          <a
+            href="https://adssettings.google.com/"
+            className="text-blue-600 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google の広告設定ページ
+          </a>
+          で管理・無効化できます。詳細は
+          <a
+            href="https://policies.google.com/technologies/ads"
+            className="text-blue-600 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google の広告ポリシー
+          </a>
+          をご確認ください。
         </p>
       </div>
     ),
@@ -77,7 +95,7 @@ const TermsPage = () => {
         <div className="max-w-3xl mx-auto px-6 py-12">
           <h1 className="text-3xl font-semibold text-gray-900">利用規約</h1>
           <p className="mt-4 text-gray-600">
-            本規約は、HumorType16 を利用されるすべての方に適用される利用条件を定めるものです。以下の内容をご確認いただき、サービスをご利用ください。
+            本規約は、HumorType16運営チームが提供する当サイトを利用されるすべての方に適用される利用条件を定めるものです。以下の内容をご確認いただき、サービスをご利用ください。
           </p>
           <div className="mt-10 space-y-10">
             {sections.map((section) => (
