@@ -5,9 +5,14 @@ const sections = [
     id: "about",
     title: "当サイトについて",
     body: (
-      <p className="leading-7 text-gray-700">
-        当サイト「HumorType16」は、ユーモアタイプ診断を気軽にお楽しみいただくための個人運営サイトです。安心してご利用いただけるよう、個人情報やプライバシーの扱いには細心の注意を払っています。
-      </p>
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          本サイト「HumorType16」は、<strong>HumorType16運営チーム</strong>が管理・運営しています。ユーモアタイプ診断コンテンツをオンラインで提供することを目的としており、安心してご利用いただけるようプライバシー保護に努めています。
+        </p>
+        <p>
+          コンテンツの品質向上や運営コストのカバーのために、一部で第三者の広告サービスを利用しています。
+        </p>
+      </div>
     ),
   },
   {
@@ -30,10 +35,10 @@ const sections = [
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
         <p>
-          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。Google およびそのパートナーは Cookie を使用し、利用者の興味・関心に合わせた広告を表示する場合があります。
+          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。
         </p>
         <p>
-          Cookie の利用を制御したい場合は、
+          広告配信事業者は Cookie を使用して、利用者の興味・関心に応じた広告を表示する場合があります。Cookie の利用はブラウザの設定や
           <a
             href="https://adssettings.google.com/"
             className="text-blue-600 underline"
@@ -42,18 +47,18 @@ const sections = [
           >
             Google の広告設定ページ
           </a>
-          から無効化できます。詳細は
+          で管理・無効化できます。詳細は
           <a
             href="https://policies.google.com/technologies/ads"
             className="text-blue-600 underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Google 広告ポリシー
+            Google の広告ポリシー
           </a>
           をご確認ください。
         </p>
-        <p>当サイトの広告パブリッシャー ID は「ca-pub-8802783650388237」です。</p>
+        <p>※ 当サイトで利用している広告パブリッシャーIDは「<strong>ca-pub-8802783650388237</strong>」です。</p>
       </div>
     ),
   },
@@ -63,10 +68,10 @@ const sections = [
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
         <p>
-          当サイトでは、アクセス解析のために Google アナリティクス（GA4）を利用しています。これにより、Cookie を通じて匿名の利用状況データを収集します。
+          当サイトでは、サービス改善のために Google アナリティクス（GA4）を使用してアクセスデータを取得しています。
         </p>
         <p>
-          収集された情報は個人を特定するものではなく、サイトの改善に役立てる目的でのみ使用します。GA4 の測定 ID は「G-EV89MLXEXB」です。
+          取得されるデータには個人を特定できる情報は含まれず、統計的な分析のために利用します。※ 使用している測定IDは「<strong>G-EV89MLXEXB</strong>」です。
         </p>
       </div>
     ),
@@ -91,16 +96,14 @@ const sections = [
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
         <p>
-          プライバシーに関するご相談やご不明点がありましたら、
-          <a
-            href="mailto:humortype16.info@gmail.com"
-            className="text-blue-600 underline"
-          >
-            humortype16.info@gmail.com
-          </a>
-          までお気軽にご連絡ください。
+          本サイトに関するご連絡は、以下の窓口までお願いいたします。
         </p>
-        <p>内容を確認のうえ、順次ご返信いたします。回答までに数日いただく場合がある点のみ、あらかじめご了承ください。</p>
+        <p>
+          <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-gray-800">contact@humor-type16.example.com</code>
+        </p>
+        <p>
+          ※ 小規模運営のため、ご質問の内容によってはお返事までお時間をいただく場合や、すべてにご回答できない場合があります。
+        </p>
       </div>
     ),
   },
@@ -117,7 +120,7 @@ const PrivacyPage = () => {
         <div className="max-w-3xl mx-auto px-6 py-12">
           <h1 className="text-3xl font-semibold text-gray-900">プライバシーポリシー</h1>
           <p className="mt-4 text-gray-600">
-            本ポリシーは、HumorType16 における個人情報の取り扱いと利用目的を明確にするためのものです。当サイトをご利用いただくにあたり、以下の内容をご確認ください。
+            本ポリシーは、HumorType16運営チームが運営する HumorType16 における個人情報の取り扱いと利用目的を明確にするためのものです。当サイトをご利用いただくにあたり、以下の内容をご確認ください。
           </p>
           <div className="mt-10 space-y-10">
             {sections.map((section) => (
