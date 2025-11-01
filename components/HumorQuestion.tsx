@@ -9,6 +9,7 @@ export interface HumorQuestionProps {
   onChange?: (value: LikertValue) => void;
   lowLabel?: string;
   highLabel?: string;
+  groupName?: string;
 }
 
 const SCALE: LikertValue[] = [1, 2, 3, 4, 5, 6, 7];
@@ -18,9 +19,12 @@ export function HumorQuestion({
   prompt,
   selected,
   onChange,
-  lowLabel = "Strongly Disagree",
-  highLabel = "Strongly Agree",
+  lowLabel = "まったく当てはまらない",
+  highLabel = "とても当てはまる",
+  groupName,
 }: HumorQuestionProps) {
+  const fieldName = groupName ?? `likert-${id}`;
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value) as LikertValue;
     if (onChange) {
@@ -50,7 +54,7 @@ export function HumorQuestion({
             >
               <input
                 type="radio"
-                name={`likert-${id}`}
+                name={fieldName}
                 value={value}
                 checked={selected === value}
                 onChange={handleChange}
