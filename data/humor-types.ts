@@ -5,73 +5,122 @@ export interface HumorScene {
 }
 
 export interface HumorCompatibility {
-  code: string;
-  title: string;
-  dynamic: string;
+  label: string;
+  with: string;
+  body: string;
 }
 
 export interface HumorTypeDetail {
   code: string;
   title: string;
   catch: string;
-  avatar?: string;
-  themeSoft?: string;
-  themeAccent?: string;
+  avatar: string;
+  themeSoft: string;
+  themeAccent: string;
   basicLong: string;
   humorLong: string;
   axesBrief: string;
   scenes: HumorScene[];
   compatibility: HumorCompatibility[];
-  family?: string;
+  family?: "EA" | "EC" | "IA" | "IC";
 }
 
 export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
+  // ======================================================
+  // 1. EALS｜完璧司会者タイプ
+  // ======================================================
   EALS: {
     code: "EALS",
-    title: "The Vaudeville Visionary",
-    catch:
-      "Expressive, experimental, and upbeat comedians who punch up energy with surreal twists.",
+    family: "EA",
+    title: "完璧司会者タイプ",
+    catch: "台本すら笑いに変える構築型MC",
+    avatar: "/avatars/EALS.webp",
+    themeSoft: "#E8F5FF",
+    themeAccent: "#1D7ED6",
     basicLong:
-      "EALS humorists are magnetic performers who love building big, theatrical setups before zagging into unexpected absurdity. They thrive on rapid-fire improvisation, bold characters, and playful misdirection that keeps the room buzzing.",
+      "あなたは場の“道筋”を瞬時に描ける人です。話題が散らかっても、核心だけを摘み取り、短い言葉で皆の視線を同じ方向へ向け直すことができる。緊張が走るときほど落ち着き、時間配分・優先順位・落としどころを頭の中で素早く並べ替え、必要最小限の一言で流れを整える——そんな進行と編集の才が自然体で発揮されます。周囲はあなたがいるだけで安心し、議論や雑談がなめらかに前へ進む感覚を得るでしょう。強みは二つ。第一に、構成の精度。第二に、安定したリーダーシップです。感情に流されにくく、相手の面目や空気の温度を守りながら“場が傷つかない形”で軌道修正できる。一方で、勢いで押すタイプと組むと、つい安全運転に寄せ過ぎて熱を下げてしまうことがあります。あなたの良さは、無駄を削ぎつつも遊びを残せる点にあります。完璧でなくていい。ほんの少しの余白を許した瞬間、あなたの構築力はもっと人間的な魅力として伝わります。",
     humorLong:
-      "They lean on layered impressions, musical tags, and physical comedy riffs to heighten every premise, all while stitching callbacks into a cohesive comedic arc that leaves audiences delighted by the ride.",
-    axesBrief:
-      "Big energy, experimental instincts, and a taste for playful structure keep your sets feeling like organized chaos in the best way.",
+      "あなたの笑いは“設計された即興”です。出来事を観察→要点を一行で要約→比喩で輪郭を強調→短い回収で締める、という工程がほぼ無意識で回っています。だからこそ、事故らない山が作れる。ボケを立て、ズレを整え、伏線を拾い上げる編集力が核にあり、聞き手の頭の中に同じ映像を出すナレーション能力にも優れています。得意なのは「段取りツッコミ」と「安心の間」。必要な沈黙をほんの一拍だけ置けるので、オチがきれいに落ちるのです。失敗パターンは二つ。説明が長くなって熱が逃げること、そして勢いのある相手を途中で“論評”して止めてしまうこと。勝ち筋は明快です。要約は短く、比喩はひとつだけ。ラスト一歩手前で軽く外してから回収する——この二段構成を意識するだけで、あなたの笑いはさらに立体的になります。設計はあなたの武器ですが、完全な支配ではなく“導く設計”にすると、場の即興性と手を取り合えます。",
+    axesBrief: "E：反応を読み全体を動かす主導タイプ／A：構図と比喩で意味を組み替える／L：筋道が整うほどオチが映える／S：伏線とタイミングを管理して事故らない山を作る",
     scenes: [
       {
-        label: "Late-night variety stages",
-        description:
-          "Theatrical lighting and a lively crowd let you build momentum with characters before detonating a surreal twist.",
-        example:
-          "You stack three increasingly bizarre lounge singers until the final one turns out to be a fog machine with stage fright.",
+        label: "友人",
+        description: "雑談の芯をそっと言語化すると、会話が自然に転がります。",
+        example: "「つまり今日は“電車の小さな奇跡選手権”ってことだよね。」",
       },
       {
-        label: "Improv jam sessions",
-        description:
-          "Loose formats give you room to escalate bits on the fly while playing off teammates' offers.",
-        example:
-          "You heighten an improv scene into a full-on time-travel musical complete with beatboxed transitions.",
+        label: "恋愛",
+        description: "気持ちを短く言い換えてから軽い比喩で返すと、安心感と知性が同時に伝わります。",
+        example: "「要するに“朝会が長距離走”って感じか。給水、任せて。」",
       },
       {
-        label: "Festival side stages",
-        description:
-          "A rotating crowd gets hooked by your high-energy openers and stays for the wild places you take the story.",
-        example:
-          "You transform a mundane weather report into a cosmic prophecy, complete with audience sound effects.",
+        label: "仕事",
+        description: "冒頭で結論の輪郭を示し、最後に一行で回収すると、場がきれいに締まります。",
+        example: "「落とし所は二つ。“締切は守る・やり方は柔軟”。この線で進めましょう。」",
       },
     ],
     compatibility: [
       {
-        code: "ECLS",
-        title: "The Polished Playwright",
-        dynamic:
-          "Their structured storytelling keeps your wildest ideas on track while you inject color, callbacks, and momentum.",
+        label: "Good",
+        with: "EALP｜即興マエストロ",
+        body:
+          "ひらめきで景色を増やす相手と、あなたの“道筋づくり”は理想的に噛み合います。あなたが最初に輪郭を描けば、相手は自由に寄り道し、終盤であなたが一行で回収する——この往復運動がもっとも美しい。途中で評価や解説を挟まず、ひと山終わってから要約と比喩で締めると、双方の強みが最大化します。",
       },
       {
-        code: "IALS",
-        title: "The Thoughtful Trickster",
-        dynamic:
-          "You supply the spark they sometimes hold back, and their grounded observations give your surreal worlds heart.",
+        label: "Challenge",
+        with: "ECEP｜盛り上げ請負人",
+        body:
+          "熱量で一気に押し上げる相手は頼もしい反面、主導権が重なりやすく、設計が効かなくなる瞬間があります。うまくいくのは、山場は相手に任せ、あなたは“酸素”の役——短い要約で空気を整え、最後だけ回収する配役に回るとき。同時に前へ出たり、説明で温度を下げたりすると損をします。",
+      },
+    ],
+  },
+
+  // ======================================================
+  // 2. EALP｜即興マエストロ
+  // ======================================================
+  EALP: {
+    code: "EALP",
+    family: "EA",
+    title: "即興マエストロ",
+    catch: "ひらめきで空気を操るアーティスト",
+    avatar: "/avatars/EALP.webp",
+    themeSoft: "#E8F5FF",
+    themeAccent: "#1D7ED6",
+    basicLong:
+      "あなたは“今この瞬間”に最も強い。目の前の出来事から面白さの種を素早く見つけ、言葉や比喩でパッと形にしてしまう即興の名手です。計画の正確さよりも、場の温度と流れをつかむ感覚に長け、思いつきの一手が場面を一気に更新します。強みは二つ。第一に、発想の跳躍力。第二に、他者の言葉を受けて“別の景色”に変換する反射神経です。あなたがふと差し込む一言は、会話の地図を塗り替え、皆の視線を新しい方向に向けます。一方で、整いすぎた段取りや、長い説明は息苦しさになりがち。自由度が低いと持ち味が鈍ります。また、思いつきの連打で全体が散らかるリスクもゼロではありません。あなたの良さは、即興の熱に“薄い骨組み”を添えられたときに最大化します。完全な台本は要らない。次に向かうおおまかな合図だけあれば、あなたは誰よりも豊かな景色を描けます。",
+    humorLong:
+      "あなたの笑いは“連想の旋回”です。相手の言葉の一部をつまみ、比喩・誇張・視点の反転で別の像に変える。そこに短い間とテンポの加速を重ね、二段・三段で畳みかけます。得意なのは、被せ、言い換え、世界観の拡張。説明を積むのではなく、映像を増やす感覚で笑いを立ち上げます。失敗パターンは、発想が枝分かれしすぎてオチが遠のくこと。勝ち筋は、ひと山ごとに「タイトル」を一言で置くことです。たとえば“上司＝季節の生き物”と名付けたら、その世界観の中でだけ遊ぶ——この“薄い骨”があれば、あなたの即興は野放図にならず、むしろスピードと自由さが際立ちます。勢いを殺さず、行き先だけ示す。この矛盾を同時に持てるのが、あなたの才能です。",
+    axesBrief:
+      "E：反応を燃料に発想が増殖する／A：比喩と連想で景色を描き替える／L：筋の一本を残すと即興が締まる／P：自由度が高いほど熱と精度が同時に上がる",
+    scenes: [
+      {
+        label: "友人",
+        description: "誰かの一言を拾って世界観を一気に描き換えると、笑いが連鎖します。",
+        example: "「“寝坊した”って…今日から目覚ましが独立宣言したんだな。」",
+      },
+      {
+        label: "恋愛",
+        description: "相手の気持ちを軽く受け止め、景色で返すと、楽しくて安心な会話になります。",
+        example: "「忙しすぎる日？ じゃあ今夜は“家カフェ”開店しよう。店長は君で。」",
+      },
+      {
+        label: "仕事",
+        description: "会議では、最初に“今日のあだ名”でテーマを名付けると発想が走ります。",
+        example: "「この案件、今は“迷子の地図”。まず“現在地シール”を貼ろう。」",
+      },
+    ],
+    compatibility: [
+      {
+        label: "Good",
+        with: "EALS｜完璧司会者タイプ",
+        body:
+          "あなたが景色を増やし、相手が道筋をそっと整える。最初に大枠だけ共有しておけば、あなたは自由に跳ね、最後を相手が短く回収する——この往復は疲れ知らずです。",
+      },
+      {
+        label: "Challenge",
+        with: "ICES｜感情翻訳家 など“検証・翻訳寄りの静かなタイプ”",
+        body:
+          "緻密な検証や温度の調整は頼もしい反面、即興の“風”が止まりやすい組み合わせです。うまく噛み合わせるなら、あなたがひと山作った“後”に相手の整理が入る順番を守ってください。",
       },
     ],
   },
