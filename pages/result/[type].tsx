@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
+import AdSlot from "../../components/AdSlot";
 import HumorResultView, { AxisInsight } from "../../components/HumorResultView";
 import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
 import { HUMOR_TYPES, HumorTypeDetail } from "../../data/humor-types";
@@ -138,6 +139,7 @@ export default function HumorResultPage({
             axisInsights={axisInsights}
             familyTagline={familyTagline ?? undefined}
           />
+          <AdSlot className="mx-auto w-full max-w-3xl" />
         </div>
       </main>
     </>
