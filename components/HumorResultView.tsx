@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { HumorTypeDetail } from "../data/humor-types";
 import { AxisKey } from "../data/humor-questions";
 import HumorCharacterBadge, { HumorFamilyCode } from "./HumorCharacterBadge";
@@ -18,23 +18,12 @@ export interface HumorResultViewProps {
   familyTagline?: string;
 }
 
-type TabKey = "overview" | "strengths" | "growth" | "moves";
-
-const TAB_LABELS: Record<TabKey, string> = {
-  overview: "Overview",
-  strengths: "Strengths",
-  growth: "Growth Areas",
-  moves: "Signature Moves",
-};
-
 export function HumorResultView({
   typeDetail,
   familyCode,
   axisInsights,
   familyTagline,
 }: HumorResultViewProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>("overview");
-
   const orderedInsights = useMemo(
     () =>
       axisInsights
@@ -48,110 +37,74 @@ export function HumorResultView({
       <div className={styles.badgeSection}>
         <HumorCharacterBadge code={familyCode} subheadline={familyTagline} />
         <div className={styles.typeSummary}>
-          <h2>{typeDetail.name}</h2>
-          <p>{typeDetail.summary}</p>
+          <h2>{typeDetail.title}</h2>
+          <p>{typeDetail.catch}</p>
         </div>
       </div>
 
-      <div className="space-y-5">
-        <nav className={styles.tabs} aria-label="Humor result sections" role="tablist">
-          {(Object.keys(TAB_LABELS) as TabKey[]).map((tab) => {
-            const isActive = activeTab === tab;
-            const tabId = `result-tab-${tab}`;
-            const panelId = `result-panel-${tab}`;
-
-            return (
-              <button
-                key={tab}
-                type="button"
-                id={tabId}
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={panelId}
-                className={`${styles.tabButton} ${isActive ? styles.tabButtonActive : ""}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {TAB_LABELS[tab]}
-              </button>
-            );
-          })}
-        </nav>
-
-        {activeTab === "overview" && (
-          <div
-            id="result-panel-overview"
-            role="tabpanel"
-            aria-labelledby="result-tab-overview"
-            className={styles.tabPanel}
-          >
-            <h3>How you connect laughs</h3>
-            <p>{typeDetail.description}</p>
-            <div className={styles.axisGrid}>
-              {orderedInsights.map((insight) => (
-                <div key={insight.key} className={styles.axisCard}>
-                  <span>{insight.label}</span>
-                  <span className="text-sm text-slate-500 dark:text-slate-300">{insight.description}</span>
-                  <div className={styles.axisProgress}>
-                    <span
-                      className={styles.axisProgressFill}
-                      style={{ width: `${Math.max(0, Math.min(100, insight.percent))}%` }}
-                    />
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                    {Math.round(insight.percent)}%
-                  </span>
+      <div className="space-y-8">
+        <section className={styles.tabPanel}>
+          <h3>How you connect laughs</h3>
+          <div className="space-y-4 text-base text-slate-700 dark:text-slate-200">
+            <p>{typeDetail.basicLong}</p>
+            <p>{typeDetail.humorLong}</p>
+          </div>
+          {typeDetail.axesBrief && (
+            <div className="space-y-3">
+              <h4 className="text-base font-semibold text-slate-800 dark:text-slate-100">Your comedic balance</h4>
+              <p className="text-sm text-slate-600 dark:text-slate-300">{typeDetail.axesBrief}</p>
+            </div>
+          )}
+          <div className={styles.axisGrid}>
+            {orderedInsights.map((insight) => (
+              <div key={insight.key} className={styles.axisCard}>
+                <span>{insight.label}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-300">{insight.description}</span>
+                <div className={styles.axisProgress}>
+                  <span
+                    className={styles.axisProgressFill}
+                    style={{ width: `${Math.max(0, Math.min(100, insight.percent))}%` }}
+                  />
                 </div>
+                <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
+                  {Math.round(insight.percent)}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {typeDetail.scenes.length > 0 && (
+          <section className={styles.tabPanel}>
+            <h3>Where your humor shines</h3>
+            <div className="space-y-4">
+              {typeDetail.scenes.map((scene) => (
+                <article key={scene.label} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                  <h4 className="text-lg font-semibold text-slate-900 dark:text-white">{scene.label}</h4>
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{scene.description}</p>
+                  <p className="mt-3 text-sm italic text-slate-500 dark:text-slate-400">“{scene.example}”</p>
+                </article>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {activeTab === "strengths" && (
-          <div
-            id="result-panel-strengths"
-            role="tabpanel"
-            aria-labelledby="result-tab-strengths"
-            className={styles.tabPanel}
-          >
-            <h3>Signature strengths</h3>
-            <ul>
-              {(typeDetail.strengths ?? []).map((strength) => (
-                <li key={strength}>{strength}</li>
+        {typeDetail.compatibility.length > 0 && (
+          <section className={styles.tabPanel}>
+            <h3>Your comedic chemistry</h3>
+            <div className="space-y-4">
+              {typeDetail.compatibility.map((match) => (
+                <article key={match.code} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
+                      {match.title} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({match.code})</span>
+                    </h4>
+                  </div>
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.dynamic}</p>
+                </article>
               ))}
-            </ul>
-          </div>
-        )}
-
-        {activeTab === "growth" && (
-          <div
-            id="result-panel-growth"
-            role="tabpanel"
-            aria-labelledby="result-tab-growth"
-            className={styles.tabPanel}
-          >
-            <h3>Growth opportunities</h3>
-            <ul>
-              {(typeDetail.growthAreas ?? []).map((area) => (
-                <li key={area}>{area}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {activeTab === "moves" && (
-          <div
-            id="result-panel-moves"
-            role="tabpanel"
-            aria-labelledby="result-tab-moves"
-            className={styles.tabPanel}
-          >
-            <h3>Signature moves</h3>
-            <ul>
-              {(typeDetail.signatureMoves ?? []).map((move) => (
-                <li key={move}>{move}</li>
-              ))}
-            </ul>
-          </div>
+            </div>
+          </section>
         )}
       </div>
     </section>

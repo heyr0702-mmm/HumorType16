@@ -119,8 +119,8 @@ export default function HumorResultPage({
   return (
     <>
       <Head>
-        <title>{`${typeDetail.name} – HumorType16`}</title>
-        <meta name="description" content={typeDetail.summary} />
+        <title>{`${typeDetail.title} – HumorType16`}</title>
+        <meta name="description" content={typeDetail.catch} />
         {preloadAvatars.map((src) => (
           <link key={src} rel="preload" as="image" href={src} />
         ))}
@@ -129,8 +129,8 @@ export default function HumorResultPage({
         <div className="mx-auto flex max-w-5xl flex-col gap-8">
           <header className="space-y-4 text-center">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">HumorType16 Result</p>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{typeDetail.name}</h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">{typeDetail.summary}</p>
+            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{typeDetail.title}</h1>
+            <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">{typeDetail.catch}</p>
           </header>
 
           <HumorResultView
