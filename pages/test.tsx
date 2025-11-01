@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import HumorQuestion, { LikertValue } from "../components/HumorQuestion";
@@ -84,6 +84,10 @@ export default function HumorTestWizard() {
   const totalQuestions = HUMOR_QUESTIONS.length;
   const totalPages = Math.max(1, Math.ceil(totalQuestions / QUESTIONS_PER_PAGE));
 
+  useEffect(() => {
+    // TODO: 診断開始イベントを送信
+  }, []);
+
   const answeredCount = useMemo(
     () =>
       Object.values(responses).reduce((count, value) => (typeof value === "number" ? count + 1 : count), 0),
@@ -120,6 +124,7 @@ export default function HumorTestWizard() {
         window.localStorage.setItem("humorType16-last-result", targetType);
       }
 
+      // TODO: 診断完了イベントを送信
       void router.push("/result-gate");
       return;
     }
