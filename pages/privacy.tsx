@@ -6,7 +6,7 @@ const sections = [
     title: "当サイトについて",
     body: (
       <p className="leading-7 text-gray-700">
-        当サイト「HumorType16」は、ユーモアタイプ診断に関する情報と体験を提供する個人運営のウェブサイトです。利用者のみなさまに安心してご利用いただけるよう、個人情報とプライバシーの保護を最優先に考えています。
+        当サイト「HumorType16」は、ユーモアタイプ診断を気軽にお楽しみいただくための個人運営サイトです。安心してご利用いただけるよう、個人情報やプライバシーの扱いには細心の注意を払っています。
       </p>
     ),
   },
@@ -14,28 +14,46 @@ const sections = [
     id: "collection",
     title: "収集する情報",
     body: (
-      <p className="leading-7 text-gray-700">
-        当サイトでは、広告配信およびアクセス解析のために Cookie や類似技術を通じて匿名の利用状況情報を収集する場合があります。これらの情報にはブラウザやデバイスの種類、閲覧したページ、アクセス日時などが含まれますが、特定の個人を識別するものではありません。
-      </p>
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          当サイトでは、サービスの向上を目的に、広告配信やアクセス解析を通じて匿名の利用状況データを収集することがあります。
+        </p>
+        <p>
+          収集される情報には、閲覧したページやアクセス日時、使用しているブラウザやデバイスの種類などが含まれます。これらのデータから特定の個人が識別されることはありません。
+        </p>
+      </div>
     ),
   },
   {
     id: "adsense",
     title: "Google AdSense について",
     body: (
-      <div className="space-y-4 text-gray-700">
-        <p className="leading-7">
-          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。パブリッシャー ID は「ca-pub-8802783650388237」です。Google およびそのパートナーは Cookie を使用してユーザーの興味に応じた広告を表示することがあります。
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。Google およびそのパートナーは Cookie を使用し、利用者の興味・関心に合わせた広告を表示する場合があります。
         </p>
-        <pre className="whitespace-pre-wrap rounded-md bg-gray-100 p-4 text-sm font-mono text-gray-800">
-{`<script
-  async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8802783650388237"
-  crossorigin="anonymous"></script>`}
-        </pre>
-        <p className="leading-7">
-          広告設定は Google の広告設定ページで無効化できます。詳細は Google 広告ポリシーをご確認ください。
+        <p>
+          Cookie の利用を制御したい場合は、
+          <a
+            href="https://adssettings.google.com/"
+            className="text-blue-600 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google の広告設定ページ
+          </a>
+          から無効化できます。詳細は
+          <a
+            href="https://policies.google.com/technologies/ads"
+            className="text-blue-600 underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google 広告ポリシー
+          </a>
+          をご確認ください。
         </p>
+        <p>当サイトの広告パブリッシャー ID は「ca-pub-8802783650388237」です。</p>
       </div>
     ),
   },
@@ -43,27 +61,47 @@ const sections = [
     id: "analytics",
     title: "Google Analytics について",
     body: (
-      <p className="leading-7 text-gray-700">
-        当サイトではアクセス解析のために「Google Analytics」を利用しています。計測 ID は「G-EV89MLXEXB」です。Google Analytics は Cookie を利用して利用者の行動を分析し、サイト改善のための統計情報として使用します。この情報は匿名で収集され、個人を特定する目的では利用されません。
-      </p>
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          当サイトでは、アクセス解析のために Google アナリティクス（GA4）を利用しています。これにより、Cookie を通じて匿名の利用状況データを収集します。
+        </p>
+        <p>
+          収集された情報は個人を特定するものではなく、サイトの改善に役立てる目的でのみ使用します。GA4 の測定 ID は「G-EV89MLXEXB」です。
+        </p>
+      </div>
     ),
   },
   {
     id: "cookie",
     title: "Cookie について",
     body: (
-      <p className="leading-7 text-gray-700">
-        Cookie は、利用者がサイトを訪問した際にブラウザへ保存される小さなデータファイルです。利用者はブラウザの設定から Cookie を無効化したり、保存済みの Cookie を削除することができます。Cookie を無効化した場合、当サイトの一部機能が利用できなくなる可能性がありますのでご了承ください。
-      </p>
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          Cookie は、サイトを訪問した際にブラウザへ保存される小さなデータファイルです。より快適にご利用いただくために活用しています。
+        </p>
+        <p>
+          ブラウザの設定から Cookie の受け入れや削除を管理できますが、無効化すると一部機能が正しく動作しない場合があります。ご利用環境に合わせて設定をご確認ください。
+        </p>
+      </div>
     ),
   },
   {
     id: "contact",
     title: "お問い合わせ先",
     body: (
-      <p className="leading-7 text-gray-700">
-        プライバシーに関するご質問やお問い合わせは、humortype16.info@gmail.com までメールでご連絡ください。迅速な回答に努めますが、返信までに数日かかる場合があります。
-      </p>
+      <div className="space-y-3 leading-7 text-gray-700">
+        <p>
+          プライバシーに関するご相談やご不明点がありましたら、
+          <a
+            href="mailto:humortype16.info@gmail.com"
+            className="text-blue-600 underline"
+          >
+            humortype16.info@gmail.com
+          </a>
+          までお気軽にご連絡ください。
+        </p>
+        <p>内容を確認のうえ、順次ご返信いたします。回答までに数日いただく場合がある点のみ、あらかじめご了承ください。</p>
+      </div>
     ),
   },
 ];
