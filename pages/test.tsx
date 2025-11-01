@@ -177,6 +177,7 @@ export default function HumorTestWizard() {
                   prompt={question.prompt}
                   selected={responses[question.id] ?? undefined}
                   onChange={(value) => handleAnswerChange(question.id, value)}
+                  groupName={`page-${currentPage}-q-${question.id}`}
                 />
               ))}
 
