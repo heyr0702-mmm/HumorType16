@@ -2,19 +2,12 @@ import { useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import HumorQuestion, { LikertValue } from "../components/HumorQuestion";
-import HumorCharacterBadge, { HumorFamilyCode } from "../components/HumorCharacterBadge";
+import type { HumorFamilyCode } from "../components/HumorCharacterBadge";
 import { HUMOR_QUESTIONS, AxisKey } from "../data/humor-questions";
 import { HUMOR_TYPES } from "../data/humor-types";
 
 const QUESTIONS_PER_PAGE = 5;
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
-
-const AXIS_LABELS: Record<AxisKey, string> = {
-  energy: "表現・エネルギー軸",
-  absurdity: "発想・抽象度軸",
-  tone: "トーン（論理／共感）軸",
-  structure: "構成・ノリ軸",
-};
 
 function computeAxisScores(
   responses: Record<number, LikertValue | null>
@@ -99,9 +92,6 @@ export default function HumorTestWizard() {
 
   const progressPercent = totalQuestions === 0 ? 0 : Math.round((answeredCount / totalQuestions) * 100);
 
-  const axisScores = useMemo(() => computeAxisScores(responses), [responses]);
-  const provisionalFamily = useMemo(() => deriveFamilyCode(axisScores), [axisScores]);
-
   const start = currentPage * QUESTIONS_PER_PAGE;
   const end = start + QUESTIONS_PER_PAGE;
   const pageQuestions = HUMOR_QUESTIONS.slice(start, end);
@@ -123,9 +113,14 @@ export default function HumorTestWizard() {
     }
 
     if (isFinalPage) {
+      const axisScores = computeAxisScores(responses);
       const targetType = deriveLikelyType(axisScores);
 
-      void router.push(`/result/${targetType}`);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("humorType16-last-result", targetType);
+      }
+
+      void router.push("/result-gate");
       return;
     }
 
@@ -136,7 +131,10 @@ export default function HumorTestWizard() {
     <>
       <Head>
         <title>HumorType16 – 診断テスト</title>
-        <meta name="description" content="30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。" />
+        <meta
+          name="description"
+          content="30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。すべての回答が完了すると、あなたのタイプ結果が表示されます。"
+        />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100">
@@ -144,50 +142,22 @@ export default function HumorTestWizard() {
           <header className="flex flex-col gap-4 text-center">
             <h1 className="text-4xl font-semibold tracking-tight text-slate-50">HumorType16 診断テスト</h1>
             <p className="mx-auto max-w-2xl text-lg text-slate-300">
-              30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。
+              30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。結果はすべて回答が終わったあとに表示されます。
             </p>
           </header>
 
           <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex flex-1 flex-col gap-4">
-                <div>
-                  <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
-                  <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
-                      style={{ width: `${progressPercent}%` }}
-                    />
-                  </div>
-                  <p className="mt-2 text-sm font-medium text-slate-200">
-                    回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
-                  </p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  {(Object.keys(AXIS_LABELS) as AxisKey[]).map((axis) => {
-                    const score = axisScores[axis] ?? 50;
-
-                    return (
-                      <div key={axis} className="rounded-2xl border border-slate-800 bg-slate-900/90 p-4">
-                        <p className="text-sm uppercase tracking-wide text-slate-400">{AXIS_LABELS[axis]}</p>
-                        <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-800">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-violet-500 to-sky-400"
-                            style={{ width: `${Math.round(score)}%` }}
-                          />
-                        </div>
-                        <p className="mt-2 text-sm text-slate-300">{Math.round(score)}%</p>
-                      </div>
-                    );
-                  })}
-                </div>
+            <div>
+              <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
+              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
+                  style={{ width: `${progressPercent}%` }}
+                />
               </div>
-
-              <div className="flex flex-col items-center justify-center text-center">
-                <HumorCharacterBadge code={provisionalFamily} headline="仮タイプ（途中診断）" />
-                <p className="mt-3 text-xs text-slate-400">回答が進むとここが更新されます。</p>
-              </div>
+              <p className="mt-2 text-sm font-medium text-slate-200">
+                回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
+              </p>
             </div>
           </section>
 
