@@ -93,16 +93,30 @@ export function HumorResultView({
           <section className={styles.tabPanel}>
             <h3>Your comedic chemistry</h3>
             <div className="space-y-4">
-              {typeDetail.compatibility.map((match) => (
-                <article key={match.code} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
-                      {match.title} <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({match.code})</span>
-                    </h4>
-                  </div>
-                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.dynamic}</p>
-                </article>
-              ))}
+              {typeDetail.compatibility.map((match) => {
+                const partnerLabel = match.with.split("｜", 2)[1];
+                const partnerName = partnerLabel ?? match.with;
+
+                return (
+                  <article
+                    key={match.code}
+                    className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
+                  >
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                          {match.label}
+                        </span>
+                        <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
+                          {partnerName}{" "}
+                          <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({match.code})</span>
+                        </h4>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.body}</p>
+                  </article>
+                );
+              })}
             </div>
           </section>
         )}
