@@ -93,27 +93,32 @@ export function HumorResultView({
           <section className={styles.tabPanel}>
             <h3>Your comedic chemistry</h3>
             <div className="space-y-4">
-              {typeDetail.compatibility.map((match) => {
-                const partnerLabel = match.partner.split("｜", 2)[1];
-                const partnerName = partnerLabel ?? match.partner;
+              {typeDetail.compatibility.map((match, index) => {
+                const labelMatch = match.description.match(/^\[(.*?)\]\s*/);
+                const compatibilityLabel = labelMatch?.[1];
+                const descriptionText = labelMatch
+                  ? match.description.slice(labelMatch[0].length)
+                  : match.description;
 
                 return (
                   <article
-                    key={match.code}
+                    key={`${match.code}-${index}`}
                     className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"
                   >
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                       <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-                        <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          {match.title}
-                        </span>
+                        {compatibilityLabel && (
+                          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                            {compatibilityLabel}
+                          </span>
+                        )}
                         <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
-                          {partnerName}{" "}
+                          {match.title}{" "}
                           <span className="text-sm font-normal text-slate-500 dark:text-slate-400">({match.code})</span>
                         </h4>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.dynamic}</p>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{descriptionText}</p>
                   </article>
                 );
               })}
