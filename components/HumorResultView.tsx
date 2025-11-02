@@ -94,8 +94,8 @@ export function HumorResultView({
             <h3>Your comedic chemistry</h3>
             <div className="space-y-4">
               {typeDetail.compatibility.map((match) => {
-                const partnerLabel = match.with.split("｜", 2)[1];
-                const partnerName = partnerLabel ?? match.with;
+                const partnerLabel = match.partner.split("｜", 2)[1];
+                const partnerName = partnerLabel ?? match.partner;
 
                 return (
                   <article
@@ -105,7 +105,7 @@ export function HumorResultView({
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                       <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
                         <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                          {match.label}
+                          {match.title}
                         </span>
                         <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
                           {partnerName}{" "}
@@ -113,7 +113,7 @@ export function HumorResultView({
                         </h4>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.body}</p>
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{match.dynamic}</p>
                   </article>
                 );
               })}

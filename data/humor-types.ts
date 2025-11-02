@@ -23,10 +23,10 @@ export interface HumorScene {
 }
 
 export interface HumorCompatibility {
-  label: string;
-  with: string;
+  title: string;
+  partner: string;
   code: HumorTypeCode;
-  body: string;
+  dynamic: string;
 }
 
 export interface HumorTypeDetail {
@@ -80,17 +80,17 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "EALP｜即興マエストロ",
+        title: "Good",
+        partner: "EALP｜即興マエストロ",
         code: "EALP",
-        body:
+        dynamic:
           "ひらめきで景色を増やす相手と、あなたの“道筋づくり”は理想的に噛み合います。あなたが最初に輪郭を描けば、相手は自由に寄り道し、終盤であなたが一行で回収する——この往復運動がもっとも美しい。途中で評価や解説を挟まず、ひと山終わってから要約と比喩で締めると、双方の強みが最大化します。",
       },
       {
-        label: "Challenge",
-        with: "ECEP｜盛り上げ請負人",
+        title: "Challenge",
+        partner: "ECEP｜盛り上げ請負人",
         code: "ECEP",
-        body:
+        dynamic:
           "熱量で一気に押し上げる相手は頼もしい反面、主導権が重なりやすく、設計が効かなくなる瞬間があります。うまくいくのは、山場は相手に任せ、あなたは“酸素”の役——短い要約で空気を整え、最後だけ回収する配役に回るとき。同時に前へ出たり、説明で温度を下げたりすると損をします。",
       },
     ],
@@ -135,17 +135,17 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "ECLP｜話術の魔術師 など“語りを伸ばすタイプ”",
+        title: "Good",
+        partner: "ECLP｜話術の魔術師 など“語りを伸ばすタイプ”",
         code: "ECLP",
-        body:
+        dynamic:
           "あなたが空気の土台を温かく整えると、相手の物語は安心して伸びていきます。相手のテンポに無理なく寄り添いながら、ときどき“ここまでが今日の第一幕”と暗く区切るように笑いの輪郭をやさしく示すと、語りはさらに映えます。",
       },
       {
-        label: "Challenge",
-        with: "ECEP｜盛り上げ請負人",
+        title: "Challenge",
+        partner: "ECEP｜盛り上げ請負人",
         code: "ECEP",
-        body:
+        dynamic:
           "相手の熱量は心強いけれど、勢いが続くとあなたの丁寧な設計が流されがちです。最初に“今日は明るめで行くけれど、最後だけ落ち着いて一回まとめたい”と小さく方針を置いておくと、熱と安心が両立します。",
       },
     ],
@@ -188,17 +188,17 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "ECES｜優しき舞台監督",
+        title: "Good",
+        partner: "ECES｜優しき舞台監督",
         code: "ECES",
-        body:
+        dynamic:
           "あなたが熱と笑顔で場を明るくし、相手がやさしい段取りで流れを整える。前に出るあなたと、裏から支える相手の役割が自然に分かれるため、誰も置き去りにならず温度も保たれます。",
       },
       {
-        label: "Challenge",
-        with: "ICLS｜分析の鬼 など“途中で位置合わせしたくなるタイプ”",
+        title: "Challenge",
+        partner: "ICLS｜分析の鬼 など“途中で位置合わせしたくなるタイプ”",
         code: "ICLS",
-        body:
+        dynamic:
           "勢いの途中で検証が入ると温度が落ちるので、ひと山終わってから整えてもらう順番を共有しておくとスムーズです。",
       },
     ],
@@ -240,17 +240,17 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "EALS｜完璧司会者タイプ",
+        title: "Good",
+        partner: "EALS｜完璧司会者タイプ",
         code: "EALS",
-        body:
+        dynamic:
           "あなたが景色を増やし、相手が道筋をそっと整える。最初に大枠だけ共有しておけば、あなたは自由に跳ね、最後を相手が短く回収する——この往復は疲れ知らずです。",
       },
       {
-        label: "Challenge",
-        with: "ICES｜感情翻訳家 など“検証・翻訳寄りの静かなタイプ”",
+        title: "Challenge",
+        partner: "ICES｜感情翻訳家 など“検証・翻訳寄りの静かなタイプ”",
         code: "ICES",
-        body:
+        dynamic:
           "緻密な検証や温度の調整は頼もしい反面、即興の“風”が止まりやすい組み合わせです。うまく噛み合わせるなら、あなたがひと山作った“後”に相手の整理が入る順番を守ってください。",
       },
     ],
@@ -288,16 +288,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "EALP｜即興マエストロ",
+        title: "Good",
+        partner: "EALP｜即興マエストロ",
         code: "EALP",
-        body: "相手が次々と景色を増やし、あなたが一言で地図を整える——この役割分担は鉄板です。最初は相手の奔流をそのまま走らせ、ひと山終わった瞬間に具体一個だけ拾って位置合わせする。勢いは保たれ、オチは短く鋭く決まります。"
+        dynamic: "相手が次々と景色を増やし、あなたが一言で地図を整える——この役割分担は鉄板です。最初は相手の奔流をそのまま走らせ、ひと山終わった瞬間に具体一個だけ拾って位置合わせする。勢いは保たれ、オチは短く鋭く決まります。"
       },
       {
-        label: "Challenge",
-        with: "IAEP｜感性探検家 など“寄り道・質感重視”のタイプ",
+        title: "Challenge",
+        partner: "IAEP｜感性探検家 など“寄り道・質感重視”のタイプ",
         code: "IAEP",
-        body: "直感で景色を渡り歩く相手は魅力的ですが、寄り道が続くとあなたの整合感覚がうずきます。「今日は自分が記録係をやる」と決め、ひと区切りごとにやさしく道標を置くと衝突になりません。"
+        dynamic: "直感で景色を渡り歩く相手は魅力的ですが、寄り道が続くとあなたの整合感覚がうずきます。「今日は自分が記録係をやる」と決め、ひと区切りごとにやさしく道標を置くと衝突になりません。"
       },
     ],
   },
@@ -334,16 +334,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "EALS｜完璧司会者タイプ",
+        title: "Good",
+        partner: "EALS｜完璧司会者タイプ",
         code: "EALS",
-        body: "あなたが景色を描き、相手が道筋をそっと整える——この分業はほとんど無敵です。最初に相手が“今日の地図”を薄く示し、あなたが自由に物語を膨らませる。終盤で相手に落としどころを返すと、流れはきれいに円環します。"
+        dynamic: "あなたが景色を描き、相手が道筋をそっと整える——この分業はほとんど無敵です。最初に相手が“今日の地図”を薄く示し、あなたが自由に物語を膨らませる。終盤で相手に落としどころを返すと、流れはきれいに円環します。"
       },
       {
-        label: "Challenge",
-        with: "ECEP｜盛り上げ請負人",
+        title: "Challenge",
+        partner: "ECEP｜盛り上げ請負人",
         code: "ECEP",
-        body: "熱量で場を跳ね上げる相手は頼もしい反面、同時に前へ出ると音がぶつかります。山場は相手に、回収は自分に——と配役を分けると双方の良さが立ちます。"
+        dynamic: "熱量で場を跳ね上げる相手は頼もしい反面、同時に前へ出ると音がぶつかります。山場は相手に、回収は自分に——と配役を分けると双方の良さが立ちます。"
       },
     ],
   },
@@ -380,16 +380,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "EAEP｜陽気ムードメーカー",
+        title: "Good",
+        partner: "EAEP｜陽気ムードメーカー",
         code: "EAEP",
-        body: "相手の明るさが場に熱を生み、あなたの丁寧な段取りがその熱を安全に循環させます。前に出る役と下支えの役が自然に分かれるため、置いていかれる人が出にくいのが強みです。"
+        dynamic: "相手の明るさが場に熱を生み、あなたの丁寧な段取りがその熱を安全に循環させます。前に出る役と下支えの役が自然に分かれるため、置いていかれる人が出にくいのが強みです。"
       },
       {
-        label: "Challenge",
-        with: "EALP｜即興マエストロ など“速度と連想で広げるタイプ”",
+        title: "Challenge",
+        partner: "EALP｜即興マエストロ など“速度と連想で広げるタイプ”",
         code: "EALP",
-        body: "速度が出るとあなたの配慮が追いつかず曖昧さが残ります。最初に大づかみの方向だけ共有し、ひと山終わってから整える順番を守ると両立できます。"
+        dynamic: "速度が出るとあなたの配慮が追いつかず曖昧さが残ります。最初に大づかみの方向だけ共有し、ひと山終わってから整える順番を守ると両立できます。"
       },
     ],
   },
@@ -426,16 +426,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "ECES｜優しき舞台監督",
+        title: "Good",
+        partner: "ECES｜優しき舞台監督",
         code: "ECES",
-        body: "あなたが熱を生み、相手がやさしい段取りで流れを整える——この分業は誰も置き去りにしません。盛り上げた直後、相手の短いひと言が輪郭を整えると、次の人が話しやすくなります。"
+        dynamic: "あなたが熱を生み、相手がやさしい段取りで流れを整える——この分業は誰も置き去りにしません。盛り上げた直後、相手の短いひと言が輪郭を整えると、次の人が話しやすくなります。"
       },
       {
-        label: "Challenge",
-        with: "ECLS｜冷静ツッコミ職人",
+        title: "Challenge",
+        partner: "ECLS｜冷静ツッコミ職人",
         code: "ECLS",
-        body: "相手の正確さは頼もしい反面、勢いの途中で指摘が入ると温度が落ちます。あなたがひと山作ってから整えてもらう順番を共有すれば、熱と正確さは両立します。"
+        dynamic: "相手の正確さは頼もしい反面、勢いの途中で指摘が入ると温度が落ちます。あなたがひと山作ってから整えてもらう順番を共有すれば、熱と正確さは両立します。"
       },
     ],
   },
@@ -472,16 +472,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "IALP｜ひらめき研究者",
+        title: "Good",
+        partner: "IALP｜ひらめき研究者",
         code: "IALP",
-        body: "相手が静かに立ち上げる独創的な発想を、あなたが見取り図に落とし込むと、アイデアは無理なく現実に接続します。落とし所だけ先に共有しておくと、二人の沈黙は推進力になります。",
+        dynamic: "相手が静かに立ち上げる独創的な発想を、あなたが見取り図に落とし込むと、アイデアは無理なく現実に接続します。落とし所だけ先に共有しておくと、二人の沈黙は推進力になります。",
       },
       {
-        label: "Challenge",
-        with: "IAEP｜感性探検家 など“寄り道の多い”タイプ",
+        title: "Challenge",
+        partner: "IAEP｜感性探検家 など“寄り道の多い”タイプ",
         code: "IAEP",
-        body: "直感の風に乗って景色を渡り歩く相手は魅力的ですが、寄り道が続くとあなたの整合センサーが反応します。現在地と次の一歩だけを短く言語化してあげると、衝突になりにくいです。",
+        dynamic: "直感の風に乗って景色を渡り歩く相手は魅力的ですが、寄り道が続くとあなたの整合センサーが反応します。現在地と次の一歩だけを短く言語化してあげると、衝突になりにくいです。",
       },
     ],
   },
@@ -518,16 +518,16 @@ export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {
     ],
     compatibility: [
       {
-        label: "Good",
-        with: "IALS｜沈黙の設計者",
+        title: "Good",
+        partner: "IALS｜沈黙の設計者",
         code: "IALS",
-        body: "あなたの独創的な仮説に、相手が静かな導線と落としどころを与えてくれます。あなたが名付け、相手が回収する——この分業はとても疲れにくいです。",
+        dynamic: "あなたの独創的な仮説に、相手が静かな導線と落としどころを与えてくれます。あなたが名付け、相手が回収する——この分業はとても疲れにくいです。",
       },
       {
-        label: "Challenge",
-        with: "ECEP｜盛り上げ請負人 など“速度で回す”タイプ",
+        title: "Challenge",
+        partner: "ECEP｜盛り上げ請負人 など“速度で回す”タイプ",
         code: "ECEP",
-        body: "相手が話題をどんどん更新する前に、あなたの検証が終わらないことがあります。先に“一例だけ”出してから相手の明るさで例を増やしてもらう運用にすると噛み合います。",
+        dynamic: "相手が話題をどんどん更新する前に、あなたの検証が終わらないことがあります。先に“一例だけ”出してから相手の明るさで例を増やしてもらう運用にすると噛み合います。",
       },
     ],
   },
