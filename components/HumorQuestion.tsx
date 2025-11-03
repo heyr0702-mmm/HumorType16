@@ -34,11 +34,11 @@ export function HumorQuestion({
 
   return (
     <fieldset className="space-y-3">
-      <legend className="font-semibold text-lg text-slate-900 dark:text-slate-100">
+      <legend className="text-lg font-semibold text-slate-900">
         {prompt}
       </legend>
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-300">
+        <div className="flex items-center justify-between text-sm text-slate-600">
           <span>{lowLabel}</span>
           <span>{highLabel}</span>
         </div>
@@ -46,10 +46,10 @@ export function HumorQuestion({
           {SCALE.map((value) => (
             <label
               key={value}
-              className={`flex flex-1 flex-col items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors ${
+              className={`flex flex-1 flex-col items-center gap-2 rounded-2xl border px-4 py-3 text-sm transition-colors ${
                 selected === value
-                  ? "border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-900/30 dark:text-blue-200"
-                  : "border-slate-200 bg-white text-slate-700 hover:border-blue-200 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  : "border-slate-200 bg-white text-slate-700 hover:border-indigo-200"
               }`}
             >
               <input

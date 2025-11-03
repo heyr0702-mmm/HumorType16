@@ -125,12 +125,12 @@ export default function HumorResultPage({
           <link key={src} rel="preload" as="image" href={src} />
         ))}
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-12 px-4 text-slate-900 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
-        <div className="mx-auto flex max-w-5xl flex-col gap-8">
-          <header className="space-y-4 text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">HumorType16 Result</p>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{typeDetail.title}</h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">{typeDetail.catch}</p>
+      <main className="min-h-screen bg-slate-50 py-12 px-4 text-slate-900">
+        <div className="mx-auto flex max-w-5xl flex-col gap-10">
+          <header className="space-y-3 text-center">
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-500">HumorType16 Result</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-slate-900">{typeDetail.title}</h1>
+            <p className="mx-auto max-w-2xl text-lg text-slate-600">{typeDetail.catch}</p>
           </header>
 
           <HumorResultView
@@ -139,7 +139,9 @@ export default function HumorResultPage({
             axisInsights={axisInsights}
             familyTagline={familyTagline ?? undefined}
           />
-          <AdSlot className="mx-auto w-full max-w-3xl" />
+          <div className="card-default bg-white py-8 px-6">
+            <AdSlot className="mx-auto w-full" />
+          </div>
         </div>
       </main>
     </>

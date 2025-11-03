@@ -142,36 +142,36 @@ export default function HumorTestWizard() {
         />
       </Head>
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100">
+      <main className="min-h-screen bg-slate-50 py-12 px-4 text-slate-900">
         <div className="mx-auto flex max-w-5xl flex-col gap-10">
           <header className="flex flex-col gap-4 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-slate-50">HumorType16 診断テスト</h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-300">
+            <h1 className="text-2xl font-semibold tracking-tight text-slate-900">HumorType16 診断テスト</h1>
+            <p className="mx-auto max-w-2xl text-lg text-slate-600">
               30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。結果はすべて回答が終わったあとに表示されます。
             </p>
           </header>
 
-          <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
+          <section className="card-default bg-white py-8 px-6">
             <div>
-              <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
-              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800">
+              <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">進捗</p>
+              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-200">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
+                  className="h-full rounded-full bg-indigo-500 transition-all"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <p className="mt-2 text-sm font-medium text-slate-200">
+              <p className="mt-2 text-sm font-medium text-slate-600">
                 回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
               </p>
             </div>
           </section>
 
-          <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-            <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
-              <p className="text-sm font-medium text-slate-300">
+          <section className="card-default bg-white py-8 px-6">
+            <div className="flex items-center justify-between gap-2 border-b border-slate-200 pb-4">
+              <p className="text-sm font-medium text-slate-600">
                 ステップ {currentPage + 1} / {totalPages}
               </p>
-              <p className="text-sm text-slate-400">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
+              <p className="text-sm text-slate-500">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
             </div>
 
             <div className="mt-6 grid gap-6">
@@ -187,7 +187,7 @@ export default function HumorTestWizard() {
               ))}
 
               {pageQuestions.length === 0 ? (
-                <p className="text-center text-slate-400">
+                <p className="text-center text-slate-500">
                   質問データを準備中です。HumorType16 の完全版をお楽しみに！
                 </p>
               ) : null}
@@ -196,7 +196,7 @@ export default function HumorTestWizard() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <button
                 type="button"
-                className="rounded-full border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-500 hover:text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+                className="border border-slate-300 bg-white px-6 py-3 text-sm font-medium text-slate-700 transition hover:border-slate-400 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
                 onClick={handleBack}
                 disabled={currentPage === 0}
               >
@@ -204,7 +204,7 @@ export default function HumorTestWizard() {
               </button>
               <button
                 type="button"
-                className="rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+                className="bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500"
                 onClick={handleNext}
                 disabled={!canGoNext || totalQuestions === 0}
               >

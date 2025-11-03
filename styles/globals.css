@@ -8,3 +8,15 @@ body {
   background-color: #f8fafc;
   color: #0f172a;
 }
+
+@layer base {
+  a,
+  button {
+    border-radius: 9999px;
+    transition: all 150ms ease;
+  }
+
+  .card-default {
+    @apply rounded-2xl border border-slate-200 shadow-sm;
+  }
+}

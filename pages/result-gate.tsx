@@ -28,19 +28,19 @@ export default function HumorResultGate() {
         <title>HumorType16 – 結果を表示する前に</title>
         <meta name="robots" content="noindex" />
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100">
+      <main className="min-h-screen bg-slate-50 py-12 px-4 text-slate-900">
         <div className="mx-auto flex max-w-3xl flex-col gap-8">
-          <header className="text-center space-y-2">
-            <h1 className="text-3xl font-semibold">診断結果を表示する前に</h1>
-            <p className="text-slate-300 text-sm">
+          <header className="space-y-2 text-center">
+            <h1 className="text-2xl font-semibold text-slate-900">診断結果を表示する前に</h1>
+            <p className="text-sm text-slate-600">
               このサイトはユーモア診断を無料で提供しているため、結果を表示する前にスポンサー表示を行っています。
             </p>
           </header>
 
-          <div className="rounded-2xl border border-slate-800/60 bg-slate-900/70 p-6">
-            <p className="text-sm mb-3 text-slate-200">スポンサー表示</p>
+          <div className="card-default bg-white py-8 px-6">
+            <p className="mb-3 text-sm font-semibold text-slate-600">スポンサー表示</p>
             <AdSlot className="w-full" />
-            <p className="text-xs mt-3 text-slate-400">
+            <p className="mt-3 text-xs text-slate-500">
               ※ 広告が表示されない場合はそのまま「診断結果を表示する」を押してください。
             </p>
           </div>
@@ -49,8 +49,10 @@ export default function HumorResultGate() {
             <button
               onClick={handleContinue}
               disabled={!typeCode}
-              className={`px-6 py-3 rounded-xl text-sm font-medium ${
-                typeCode ? "bg-sky-500 hover:bg-sky-400" : "bg-slate-500 cursor-not-allowed"
+              className={`px-8 py-3 text-sm font-semibold text-white shadow-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 ${
+                typeCode
+                  ? "bg-indigo-600 hover:bg-indigo-500"
+                  : "cursor-not-allowed bg-slate-300 text-slate-500 focus-visible:ring-offset-0"
               }`}
             >
               診断結果を表示する
