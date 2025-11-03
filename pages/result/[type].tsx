@@ -3,10 +3,18 @@ import path from "node:path";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import AdSlot from "../../components/AdSlot";
-import HumorResultView, { AxisInsight } from "../../components/HumorResultView";
+import Layout from "../../components/Layout";
+import ResultHeader from "../../components/ResultHeader";
 import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
 import { HUMOR_TYPES, HumorTypeDetail } from "../../data/humor-types";
 import { AxisKey } from "../../data/humor-questions";
+
+interface AxisInsight {
+  key: AxisKey;
+  label: string;
+  description: string;
+  percent: number;
+}
 
 interface ResultPageProps {
   typeDetail: HumorTypeDetail;
@@ -14,6 +22,7 @@ interface ResultPageProps {
   axisInsights: AxisInsight[];
   familyTagline: string | null;
   preloadAvatars: string[];
+  shareUrl: string;
 }
 
 const AXIS_METADATA: Record<AxisKey, { label: string; description: string }> = {
@@ -43,6 +52,13 @@ const FAMILY_TAGLINES: Record<HumorFamilyCode, string> = {
 };
 
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
+
+const FAMILY_ACCENTS: Record<HumorFamilyCode, string> = {
+  EA: "#1D7ED6",
+  EC: "#2FA36B",
+  IA: "#E67E22",
+  IC: "#6E56CF",
+};
 
 function deriveAxisPercent(typeCode: string, axis: AxisKey): number {
   const letters = typeCode.split("");
@@ -83,7 +99,7 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
     return { notFound: true };
   }
 
-  const familyCode = (typeCodeParam.slice(0, 2) as HumorFamilyCode) ?? "EA";
+  const derivedFamilyCode = (typeDetail.family ?? typeCodeParam.slice(0, 2)) as HumorFamilyCode;
 
   const avatarDirectory = path.join(process.cwd(), "public", "avatars");
   const preloadAvatars = await fs
@@ -98,13 +114,17 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
     percent: deriveAxisPercent(typeCodeParam, axis),
   }));
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://humortype16.com";
+  const shareUrl = `${baseUrl.replace(/\/$/, "")}/result/${typeDetail.code}`;
+
   return {
     props: {
       typeDetail,
-      familyCode: FAMILY_CODES.includes(familyCode) ? familyCode : "EA",
+      familyCode: FAMILY_CODES.includes(derivedFamilyCode) ? derivedFamilyCode : "EA",
       axisInsights,
-      familyTagline: FAMILY_TAGLINES[familyCode] ?? null,
+      familyTagline: FAMILY_TAGLINES[derivedFamilyCode] ?? null,
       preloadAvatars,
+      shareUrl,
     },
   };
 };
@@ -115,7 +135,14 @@ export default function HumorResultPage({
   axisInsights,
   familyTagline,
   preloadAvatars,
+  shareUrl,
 }: ResultPageProps) {
+  const orderedInsights = axisInsights
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
+
+  const accentColor = FAMILY_ACCENTS[familyCode];
+
   return (
     <>
       <Head>
@@ -125,23 +152,118 @@ export default function HumorResultPage({
           <link key={src} rel="preload" as="image" href={src} />
         ))}
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 py-12 px-4 text-slate-900 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
-        <div className="mx-auto flex max-w-5xl flex-col gap-8">
-          <header className="space-y-4 text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300">HumorType16 Result</p>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white">{typeDetail.title}</h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-600 dark:text-slate-300">{typeDetail.catch}</p>
-          </header>
-
-          <HumorResultView
+      <Layout
+        variant="light"
+        hero={
+          <ResultHeader
             typeDetail={typeDetail}
             familyCode={familyCode}
-            axisInsights={axisInsights}
-            familyTagline={familyTagline ?? undefined}
+            familyTagline={familyTagline}
+            shareUrl={shareUrl}
           />
-          <AdSlot className="mx-auto w-full max-w-3xl" />
-        </div>
-      </main>
+        }
+      >
+        <section className="rounded-3xl border border-white/80 bg-white/80 p-8 shadow-soft backdrop-blur">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold text-slate-900">あなたの笑いの骨格</h2>
+              <p className="text-base leading-relaxed text-slate-700">{typeDetail.basicLong}</p>
+              <p className="text-base leading-relaxed text-slate-700">{typeDetail.humorLong}</p>
+            </div>
+
+            {typeDetail.axesBrief ? (
+              <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm">
+                <h3 className="text-sm font-semibold text-slate-900">Your comedic balance</h3>
+                <p className="mt-1 text-sm leading-relaxed text-slate-600">{typeDetail.axesBrief}</p>
+              </div>
+            ) : null}
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {orderedInsights.map((insight) => (
+                <article key={insight.key} className="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h4 className="text-base font-semibold text-slate-900">{insight.label}</h4>
+                    <span className="text-sm font-semibold text-slate-700">{Math.round(insight.percent)}%</span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{insight.description}</p>
+                  <div className="mt-4 h-2 w-full rounded-full bg-slate-200">
+                    <div
+                      className="h-2 rounded-full"
+                      style={{
+                        width: `${Math.max(0, Math.min(100, insight.percent))}%`,
+                        background: `linear-gradient(90deg, ${accentColor} 0%, ${accentColor}cc 100%)`,
+                      }}
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {typeDetail.scenes.length > 0 ? (
+          <section className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-soft backdrop-blur">
+            <header className="mb-6 space-y-2">
+              <h2 className="text-2xl font-semibold text-slate-900">どんなシーンで冴える？</h2>
+              <p className="text-sm text-slate-600">場面別の活躍ポイントと、すぐに使える一言サンプルです。</p>
+            </header>
+            <div className="grid gap-4 md:grid-cols-2">
+              {typeDetail.scenes.map((scene) => (
+                <article
+                  key={scene.label}
+                  className="flex h-full flex-col gap-3 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-sm"
+                >
+                  <h3 className="text-lg font-semibold text-slate-900">{scene.label}</h3>
+                  <p className="text-sm leading-relaxed text-slate-600">{scene.description}</p>
+                  <p className="text-sm italic text-slate-500">“{scene.example}”</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {typeDetail.compatibility.length > 0 ? (
+          <section className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-soft backdrop-blur">
+            <header className="mb-6 space-y-2">
+              <h2 className="text-2xl font-semibold text-slate-900">相性の良いタイプ</h2>
+              <p className="text-sm text-slate-600">タッグで笑いを磨くときのヒントをまとめました。</p>
+            </header>
+            <div className="space-y-4">
+              {typeDetail.compatibility.map((match, index) => {
+                const labelMatch = match.description.match(/^\[(.*?)\]\s*/);
+                const compatibilityLabel = labelMatch?.[1];
+                const descriptionText = labelMatch
+                  ? match.description.slice(labelMatch[0].length)
+                  : match.description;
+
+                return (
+                  <article
+                    key={`${match.code}-${index}`}
+                    className="rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-sm"
+                  >
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
+                        {compatibilityLabel ? (
+                          <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                            {compatibilityLabel}
+                          </span>
+                        ) : null}
+                        <h3 className="text-lg font-semibold text-slate-900">
+                          {match.title}{" "}
+                          <span className="text-sm font-normal text-slate-500">({match.code})</span>
+                        </h3>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{descriptionText}</p>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        <AdSlot className="mx-auto w-full max-w-3xl" />
+      </Layout>
     </>
   );
 }
