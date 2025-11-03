@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import HumorQuestion, { LikertValue } from "../components/HumorQuestion";
+import Layout from "../components/Layout";
+import ProgressBar from "../components/ProgressBar";
+import QuestionCard from "../components/QuestionCard";
+import { LikertValue } from "../components/Scale7";
 import type { HumorFamilyCode } from "../components/HumorCharacterBadge";
 import { HUMOR_QUESTIONS, AxisKey } from "../data/humor-questions";
 import { HUMOR_TYPES } from "../data/humor-types";
@@ -142,78 +145,63 @@ export default function HumorTestWizard() {
         />
       </Head>
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100">
-        <div className="mx-auto flex max-w-5xl flex-col gap-10">
-          <header className="flex flex-col gap-4 text-center">
-            <h1 className="text-4xl font-semibold tracking-tight text-slate-50">HumorType16 診断テスト</h1>
-            <p className="mx-auto max-w-2xl text-lg text-slate-300">
-              30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。結果はすべて回答が終わったあとに表示されます。
+      <Layout
+        title="HumorType16 診断テスト"
+        description="30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。結果はすべて回答が終わったあとに表示されます。"
+      >
+        <ProgressBar
+          answeredCount={answeredCount}
+          totalQuestions={totalQuestions}
+          progressPercent={progressPercent}
+        />
+
+        <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
+          <div className="flex flex-col gap-2 border-b border-slate-800 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-medium text-slate-300">
+              ステップ {currentPage + 1} / {totalPages}
             </p>
-          </header>
+            <p className="text-sm text-slate-400">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
+          </div>
 
-          <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-            <div>
-              <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
-              <div className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
-                  style={{ width: `${progressPercent}%` }}
-                />
-              </div>
-              <p className="mt-2 text-sm font-medium text-slate-200">
-                回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
+          <div className="mt-6 grid gap-6">
+            {pageQuestions.map((question) => (
+              <QuestionCard
+                key={question.id}
+                id={question.id}
+                prompt={question.prompt}
+                value={responses[question.id] ?? null}
+                onChange={(value) => handleAnswerChange(question.id, value)}
+                groupName={`page-${currentPage}-q-${question.id}`}
+              />
+            ))}
+
+            {pageQuestions.length === 0 ? (
+              <p className="text-center text-slate-400">
+                質問データを準備中です。HumorType16 の完全版をお楽しみに！
               </p>
-            </div>
-          </section>
+            ) : null}
+          </div>
 
-          <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-            <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
-              <p className="text-sm font-medium text-slate-300">
-                ステップ {currentPage + 1} / {totalPages}
-              </p>
-              <p className="text-sm text-slate-400">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
-            </div>
-
-            <div className="mt-6 grid gap-6">
-              {pageQuestions.map((question) => (
-                <HumorQuestion
-                  key={question.id}
-                  id={question.id}
-                  prompt={question.prompt}
-                  selected={responses[question.id] ?? undefined}
-                  onChange={(value) => handleAnswerChange(question.id, value)}
-                  groupName={`page-${currentPage}-q-${question.id}`}
-                />
-              ))}
-
-              {pageQuestions.length === 0 ? (
-                <p className="text-center text-slate-400">
-                  質問データを準備中です。HumorType16 の完全版をお楽しみに！
-                </p>
-              ) : null}
-            </div>
-
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <button
-                type="button"
-                className="rounded-full border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-500 hover:text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-                onClick={handleBack}
-                disabled={currentPage === 0}
-              >
-                前のページへ
-              </button>
-              <button
-                type="button"
-                className="rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
-                onClick={handleNext}
-                disabled={!canGoNext || totalQuestions === 0}
-              >
-                {isFinalPage ? "診断結果を見る" : "次のページへ"}
-              </button>
-            </div>
-          </section>
-        </div>
-      </main>
+          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="button"
+              className="rounded-full border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-500 hover:text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
+              onClick={handleBack}
+              disabled={currentPage === 0}
+            >
+              前のページへ
+            </button>
+            <button
+              type="button"
+              className="focus-ring rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+              onClick={handleNext}
+              disabled={!canGoNext || totalQuestions === 0}
+            >
+              {isFinalPage ? "診断結果を見る" : "次のページへ"}
+            </button>
+          </div>
+        </section>
+      </Layout>
     </>
   );
 }
