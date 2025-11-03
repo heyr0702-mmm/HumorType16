@@ -114,8 +114,9 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
     percent: deriveAxisPercent(typeCodeParam, axis),
   }));
 
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://humortype16.com";
-  const shareUrl = `${baseUrl.replace(/\/$/, "")}/result/${typeDetail.code}`;
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  const sharePath = `/result/${typeDetail.code}`;
+  const shareUrl = baseUrl ? `${baseUrl}${sharePath}` : sharePath;
 
   return {
     props: {
