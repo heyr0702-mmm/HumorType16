@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CSSProperties, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import type { CSSProperties } from "react";
 import type { HumorTypeDetail } from "../data/humor-types";
 import type { HumorFamilyCode } from "./HumorCharacterBadge";
+
+type CSSVarStyle = CSSProperties & {
+  [key: `--${string}`]: string | number;
+};
 
 type ShareStatus = "idle" | "copied" | "error";
 
@@ -92,11 +97,11 @@ export default function ResultHeader({
     [accentColor]
   );
 
-  const focusRingStyle = useMemo<CSSProperties>(
+  const focusRingStyle = useMemo<CSSVarStyle>(
     () => ({
       // Tailwind's ring utilities rely on this CSS variable.
       // Setting it ensures the custom accent color is applied on focus.
-      ["--tw-ring-color" as "--tw-ring-color"]: accentColor,
+      "--tw-ring-color": accentColor,
     }),
     [accentColor]
   );
