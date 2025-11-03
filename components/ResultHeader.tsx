@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import type { HumorTypeDetail } from "../data/humor-types";
 import type { HumorFamilyCode } from "./HumorCharacterBadge";
+import { buildShareUrl, copyToClipboard } from "../utils/share";
 
 type CSSVarStyle = CSSProperties & {
   [key: `--${string}`]: string | number;
@@ -34,6 +35,22 @@ export default function ResultHeader({
   const [shareStatus, setShareStatus] = useState<ShareStatus>("idle");
   const accentColor = FAMILY_ACCENTS[familyCode];
 
+  const sharePath = useMemo(() => {
+    if (shareUrl && !shareUrl.startsWith("http")) {
+      return shareUrl;
+    }
+
+    return `/result/${typeDetail.code}`;
+  }, [shareUrl, typeDetail.code]);
+
+  const resolvedShareUrl = useMemo(() => {
+    if (shareUrl && shareUrl.startsWith("http")) {
+      return shareUrl;
+    }
+
+    return buildShareUrl(sharePath);
+  }, [sharePath, shareUrl]);
+
   const bandStyle = useMemo(
     () => ({
       background: `linear-gradient(135deg, ${typeDetail.themeSoft ?? "#f1f5f9"} 0%, rgba(255, 255, 255, 0.92) 65%)`,
@@ -43,40 +60,38 @@ export default function ResultHeader({
 
   const shareText = `HumorType16で「${typeDetail.title}」タイプでした。${typeDetail.catch}`;
 
-  const xShareHref = useMemo(
-    () =>
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(
-        shareUrl
-      )}&hashtags=HumorType16`,
-    [shareText, shareUrl]
-  );
+  const xShareHref = useMemo(() => {
+    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(
+      resolvedShareUrl
+    )}&hashtags=HumorType16`;
+  }, [resolvedShareUrl, shareText]);
 
-  const lineShareHref = useMemo(
-    () =>
-      `https://line.me/R/msg/text/?${encodeURIComponent(`${shareText}\n${shareUrl}`)}`,
-    [shareText, shareUrl]
-  );
+  const lineShareHref = useMemo(() => {
+    return `https://line.me/R/msg/text/?${encodeURIComponent(`${shareText}\n${resolvedShareUrl}`)}`;
+  }, [resolvedShareUrl, shareText]);
 
   const handleCopyLink = useCallback(async () => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(shareUrl);
-      } else {
-        const input = document.createElement("input");
-        input.value = shareUrl;
-        document.body.appendChild(input);
-        input.select();
-        document.execCommand("copy");
-        document.body.removeChild(input);
-      }
+    const copied = await copyToClipboard(resolvedShareUrl);
+
+    if (copied) {
       setShareStatus("copied");
       setTimeout(() => setShareStatus("idle"), 2000);
-    } catch (error) {
-      console.error("Failed to copy link", error);
-      setShareStatus("error");
-      setTimeout(() => setShareStatus("idle"), 2000);
+      return;
     }
-  }, [shareUrl]);
+
+    if (typeof window !== "undefined" && typeof window.prompt === "function") {
+      try {
+        window.prompt("以下のURLをコピーしてください", resolvedShareUrl);
+      } catch (error) {
+        console.warn("Copy fallback unavailable", error);
+      }
+    } else {
+      console.warn("Copy fallback unavailable");
+    }
+
+    setShareStatus("error");
+    setTimeout(() => setShareStatus("idle"), 2000);
+  }, [resolvedShareUrl]);
 
   const actionButtonStyle = useMemo<CSSProperties>(
     () => ({
@@ -156,6 +171,7 @@ export default function ResultHeader({
               rel="noopener noreferrer"
               className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:brightness-110"
               style={{ ...actionButtonStyle, ...focusRingStyle }}
+              data-testid="share-x-button"
             >
               Xでシェア
             </a>
@@ -165,6 +181,7 @@ export default function ResultHeader({
               rel="noopener noreferrer"
               className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:brightness-105"
               style={{ ...secondaryButtonStyle, ...focusRingStyle }}
+              data-testid="share-line-button"
             >
               LINEで送る
             </a>
@@ -173,6 +190,7 @@ export default function ResultHeader({
               onClick={handleCopyLink}
               className="focus-ring inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-400 hover:text-slate-800"
               style={focusRingStyle}
+              data-testid="copy-link-button"
             >
               {shareStatus === "copied" ? "リンクをコピー済" : "リンクをコピー"}
             </button>
@@ -180,6 +198,7 @@ export default function ResultHeader({
               href="/test"
               className="focus-ring inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/70 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-400 hover:text-slate-900"
               style={focusRingStyle}
+              data-testid="retry-button"
             >
               もう一度診断
             </Link>
