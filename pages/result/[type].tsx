@@ -27,20 +27,20 @@ interface ResultPageProps {
 
 const AXIS_METADATA: Record<AxisKey, { label: string; description: string }> = {
   energy: {
-    label: "Energy",
-    description: "How boldly you project your comedic point of view.",
+    label: "エネルギー",
+    description: "自分の笑いの視点をどれだけ大胆に表現するか。",
   },
   absurdity: {
-    label: "Absurdity",
-    description: "Your appetite for surreal twists versus classic setups.",
+    label: "ナンセンス度",
+    description: "王道の展開と比べて、どれだけシュールなひねりを好むか。",
   },
   tone: {
-    label: "Tone",
-    description: "Whether your humor stays lighthearted or sharp-edged.",
+    label: "トーン",
+    description: "ユーモアがどれだけ軽やかか、あるいは鋭い切れ味か。",
   },
   structure: {
-    label: "Structure",
-    description: "How much you prefer planned arcs versus improvised riffs.",
+    label: "構成力",
+    description: "綿密に練った構成とアドリブ感のどちらを好むか。",
   },
 };
 
@@ -174,7 +174,7 @@ export default function HumorResultPage({
 
             {typeDetail.axesBrief ? (
               <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm">
-                <h3 className="text-sm font-semibold text-slate-900">Your comedic balance</h3>
+                <h3 className="text-sm font-semibold text-slate-900">あなたのユーモア・バランス</h3>
                 <p className="mt-1 text-sm leading-relaxed text-slate-600">{typeDetail.axesBrief}</p>
               </div>
             ) : null}
