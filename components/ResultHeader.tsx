@@ -150,12 +150,14 @@ export default function ResultHeader({
               <p className="max-w-2xl text-base text-slate-600">{typeDetail.catch}</p>
             </div>
           </div>
-          <div className="flex items-start gap-3 text-right">
-            <div className="flex flex-col items-end gap-2 text-sm text-slate-500">
-              <span className="rounded-full bg-white/80 px-3 py-1 font-medium text-slate-600 shadow-sm">
-                タイプコード: {typeDetail.code}
+          <div className="flex items-start justify-end text-right">
+            <div className="flex flex-col items-end text-right">
+              <span className="mt-1 text-[28px]/[32px] font-semibold text-slate-800">
+                {typeDetail.code}
               </span>
-              {familyTagline ? <p className="max-w-xs text-right text-sm text-slate-600">{familyTagline}</p> : null}
+              {familyTagline ? (
+                <p className="mt-2 max-w-xs text-right text-sm text-slate-600">{familyTagline}</p>
+              ) : null}
             </div>
           </div>
         </div>
