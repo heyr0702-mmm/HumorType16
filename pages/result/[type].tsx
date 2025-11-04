@@ -38,11 +38,11 @@ const AXIS_METADATA: Record<AxisKey, { label: string; description: string }> = {
 };
 
 
-const FAMILY_TAGLINES: Record<HumorFamilyCode, string> = {
-  EA: "High-energy surrealists who love to surprise.",
-  EC: "Expressive storytellers with timeless structure.",
-  IA: "Quiet experimenters who savor the unexpected.",
-  IC: "Introspective observers with classic timing.",
+const FAMILY_TAGLINES: Record<HumorFamilyCode, string | null> = {
+  EA: "瞬発力で驚きを仕掛けるアイデア派。",
+  EC: "表現豊かに王道の構成で魅せる語り手。",
+  IA: "静かな空気からじわじわ笑いを醸す実験家。",
+  IC: "内省的な視点でクラシックな間を生かす観察者。",
 };
 
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
