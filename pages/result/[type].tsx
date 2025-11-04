@@ -4,6 +4,7 @@ import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import AdSlot from "../../components/AdSlot";
 import Layout from "../../components/Layout";
+import RewardedUnlock from "../../components/RewardedUnlock";
 import ResultHeader from "../../components/ResultHeader";
 import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
 import { HUMOR_TYPES, HumorTypeDetail } from "../../data/humor-types";
@@ -101,6 +102,12 @@ export default function HumorResultPage({
 }: ResultPageProps) {
   const axisValues = getNormalizedAxisValues(typeDetail.code);
   const axisOrder: AxisKey[] = ["energy", "absurdity", "tone", "structure"];
+  const longFormBlocks = `${typeDetail.basicLong}\n\n${typeDetail.humorLong}`
+    .split("\n\n")
+    .map((block) => block.trim())
+    .filter((block) => block.length > 0);
+  const leadBlock = longFormBlocks[0] ?? "";
+  const extraBlocks = longFormBlocks.slice(1);
 
   return (
     <>
@@ -164,12 +171,28 @@ export default function HumorResultPage({
         </section>
 
         <section className="rounded-3xl border border-white/80 bg-white/80 p-8 shadow-soft backdrop-blur">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold text-slate-900">あなたの笑いの骨格</h2>
-              <p className="text-base leading-relaxed text-slate-700">{typeDetail.basicLong}</p>
-              <p className="text-base leading-relaxed text-slate-700">{typeDetail.humorLong}</p>
-            </div>
+          <div className="space-y-10">
+            {leadBlock ? (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold text-slate-900">ユーモアの骨格</h2>
+                <p className="text-base leading-relaxed text-slate-700">{leadBlock}</p>
+              </div>
+            ) : null}
+
+            {extraBlocks.length > 0 ? (
+              <div className="space-y-4">
+                <h2 className="text-2xl font-semibold text-slate-900">ユーモアの展開パターン</h2>
+                <RewardedUnlock unlockKey={`result-extra-${typeDetail.code}`}>
+                  <div className="space-y-4">
+                    {extraBlocks.map((block, index) => (
+                      <p key={index} className="text-base leading-relaxed text-slate-700">
+                        {block}
+                      </p>
+                    ))}
+                  </div>
+                </RewardedUnlock>
+              </div>
+            ) : null}
           </div>
         </section>
 
