@@ -179,17 +179,24 @@ export default function HumorResultPage({
               <h2 className="text-2xl font-semibold text-slate-900">どんなシーンで冴える？</h2>
               <p className="text-sm text-slate-600">場面別の活躍ポイントと、すぐに使える一言サンプルです。</p>
             </header>
-            <div className="grid gap-4 md:grid-cols-2">
-              {typeDetail.scenes.map((scene) => (
-                <article
-                  key={scene.label}
-                  className="flex h-full flex-col gap-3 rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-sm"
-                >
-                  <h3 className="text-lg font-semibold text-slate-900">{scene.label}</h3>
-                  <p className="text-sm leading-relaxed text-slate-600">{scene.description}</p>
-                  <p className="text-sm italic text-slate-500">“{scene.example}”</p>
-                </article>
-              ))}
+            <div className="rounded-2xl border border-slate-200 bg-white/95 p-4 sm:p-5">
+              <ul className="divide-y divide-slate-200">
+                {typeDetail.scenes.map((scene, index) => {
+                  const inlineText = [scene.label, scene.description, scene.example].join(" ｜ ");
+
+                  return (
+                    <li
+                      key={`${scene.label}-${index}`}
+                      className="flex min-w-0 items-center gap-3 py-3 text-sm text-slate-700 first:pt-0 last:pb-0 sm:text-base"
+                    >
+                      <span className="h-1.5 w-1.5 flex-none rounded-full bg-slate-400" />
+                      <span className="flex-1 truncate" title={inlineText}>
+                        {inlineText}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </section>
         ) : null}
