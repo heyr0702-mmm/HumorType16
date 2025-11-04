@@ -3,7 +3,6 @@ import path from "node:path";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import AdSlot from "../../components/AdSlot";
-import AxisBar from "../../components/AxisBar";
 import Layout from "../../components/Layout";
 import ResultHeader from "../../components/ResultHeader";
 import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
@@ -21,41 +20,23 @@ interface ResultPageProps {
 
 const AXIS_METADATA: Record<AxisKey, { label: string; description: string }> = {
   energy: {
-    label: "エネルギー",
-    description: "自分の笑いの視点をどれだけ大胆に表現するか。",
+    label: "瞬発力",
+    description: "その場の温度をつかみ、テンポよく笑いを広げる即興性の高さです。",
   },
   absurdity: {
-    label: "ナンセンス度",
-    description: "王道の展開と比べて、どれだけシュールなひねりを好むか。",
+    label: "発想の飛距離",
+    description: "現実の延長線上からどれだけ離れた視点や設定で楽しむかを示します。",
   },
   tone: {
-    label: "トーン",
-    description: "ユーモアがどれだけ軽やかか、あるいは鋭い切れ味か。",
+    label: "語り口",
+    description: "共感で包むか論理で切るか、ツッコミのトーンの傾向を表します。",
   },
   structure: {
-    label: "構成力",
-    description: "綿密に練った構成とアドリブ感のどちらを好むか。",
+    label: "構成バランス",
+    description: "段取りを整えるかノリで崩すか、展開の組み立て方の志向を測ります。",
   },
 };
 
-const AXIS_POLES: Record<AxisKey, { left: string; right: string }> = {
-  energy: {
-    left: "静かに温める",
-    right: "その場で広げる",
-  },
-  absurdity: {
-    left: "日常を観察する",
-    right: "発想で跳ぶ",
-  },
-  tone: {
-    left: "共感で包む",
-    right: "論理で切る",
-  },
-  structure: {
-    left: "ノリで崩す",
-    right: "構成して落とす",
-  },
-};
 
 const FAMILY_TAGLINES: Record<HumorFamilyCode, string> = {
   EA: "High-energy surrealists who love to surprise.",
@@ -65,13 +46,6 @@ const FAMILY_TAGLINES: Record<HumorFamilyCode, string> = {
 };
 
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
-
-const FAMILY_ACCENTS: Record<HumorFamilyCode, string> = {
-  EA: "#1D7ED6",
-  EC: "#2FA36B",
-  IA: "#E67E22",
-  IC: "#6E56CF",
-};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -125,7 +99,6 @@ export default function HumorResultPage({
   preloadAvatars,
   shareUrl,
 }: ResultPageProps) {
-  const accentColor = FAMILY_ACCENTS[familyCode];
   const axisValues = getNormalizedAxisValues(typeDetail.code);
   const axisOrder: AxisKey[] = ["energy", "absurdity", "tone", "structure"];
 
@@ -160,17 +133,33 @@ export default function HumorResultPage({
               </p>
             )}
           </header>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {axisOrder.map((axisKey) => (
-              <AxisBar
-                key={axisKey}
-                label={AXIS_METADATA[axisKey].label}
-                value={axisValues[axisKey] ?? 0.5}
-                leftPole={AXIS_POLES[axisKey].left}
-                rightPole={AXIS_POLES[axisKey].right}
-                accentColor={accentColor}
-              />
-            ))}
+          <div className="mt-8 space-y-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+              サブ指標
+            </h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              {axisOrder.map((axisKey) => {
+                const axisValue = axisValues[axisKey] ?? 0.5;
+                const axisPercent = Math.round(axisValue * 100);
+
+                return (
+                  <article
+                    key={axisKey}
+                    className="flex h-full flex-col justify-between rounded-2xl border border-slate-200 bg-white/95 p-5 shadow-sm"
+                  >
+                    <div className="flex items-baseline justify-between gap-3">
+                      <h4 className="text-base font-semibold text-slate-900">
+                        {AXIS_METADATA[axisKey].label}
+                      </h4>
+                      <span className="text-lg font-bold text-slate-900">{axisPercent}%</span>
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                      {AXIS_METADATA[axisKey].description}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </section>
 
