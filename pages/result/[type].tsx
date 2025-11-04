@@ -3,23 +3,17 @@ import path from "node:path";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import AdSlot from "../../components/AdSlot";
+import AxisBar from "../../components/AxisBar";
 import Layout from "../../components/Layout";
 import ResultHeader from "../../components/ResultHeader";
 import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
 import { HUMOR_TYPES, HumorTypeDetail } from "../../data/humor-types";
 import { AxisKey } from "../../data/humor-questions";
-
-interface AxisInsight {
-  key: AxisKey;
-  label: string;
-  description: string;
-  percent: number;
-}
+import { getNormalizedAxisValues } from "../../utils/scoring";
 
 interface ResultPageProps {
   typeDetail: HumorTypeDetail;
   familyCode: HumorFamilyCode;
-  axisInsights: AxisInsight[];
   familyTagline: string | null;
   preloadAvatars: string[];
   shareUrl: string;
@@ -44,6 +38,25 @@ const AXIS_METADATA: Record<AxisKey, { label: string; description: string }> = {
   },
 };
 
+const AXIS_POLES: Record<AxisKey, { left: string; right: string }> = {
+  energy: {
+    left: "静かに温める",
+    right: "その場で広げる",
+  },
+  absurdity: {
+    left: "日常を観察する",
+    right: "発想で跳ぶ",
+  },
+  tone: {
+    left: "共感で包む",
+    right: "論理で切る",
+  },
+  structure: {
+    left: "ノリで崩す",
+    right: "構成して落とす",
+  },
+};
+
 const FAMILY_TAGLINES: Record<HumorFamilyCode, string> = {
   EA: "High-energy surrealists who love to surprise.",
   EC: "Expressive storytellers with timeless structure.",
@@ -59,23 +72,6 @@ const FAMILY_ACCENTS: Record<HumorFamilyCode, string> = {
   IA: "#E67E22",
   IC: "#6E56CF",
 };
-
-function deriveAxisPercent(typeCode: string, axis: AxisKey): number {
-  const letters = typeCode.split("");
-
-  switch (axis) {
-    case "energy":
-      return letters[0] === "I" ? 35 : 70;
-    case "absurdity":
-      return letters[1] === "C" ? 38 : 68;
-    case "tone":
-      return letters[2] === "L" ? 62 : 45;
-    case "structure":
-      return letters[3] === "S" ? 66 : 44;
-    default:
-      return 50;
-  }
-}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -107,13 +103,6 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
     .then((files) => files.filter((file) => file.endsWith(".svg")).map((file) => `/avatars/${file}`))
     .catch(() => FAMILY_CODES.map((code) => `/avatars/${code}.svg`));
 
-  const axisInsights: AxisInsight[] = (Object.keys(AXIS_METADATA) as AxisKey[]).map((axis) => ({
-    key: axis,
-    label: AXIS_METADATA[axis].label,
-    description: AXIS_METADATA[axis].description,
-    percent: deriveAxisPercent(typeCodeParam, axis),
-  }));
-
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
   const sharePath = `/result/${typeDetail.code}`;
   const shareUrl = baseUrl ? `${baseUrl}${sharePath}` : sharePath;
@@ -122,7 +111,6 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
     props: {
       typeDetail,
       familyCode: FAMILY_CODES.includes(derivedFamilyCode) ? derivedFamilyCode : "EA",
-      axisInsights,
       familyTagline: FAMILY_TAGLINES[derivedFamilyCode] ?? null,
       preloadAvatars,
       shareUrl,
@@ -133,16 +121,13 @@ export const getStaticProps: GetStaticProps<ResultPageProps> = async ({ params }
 export default function HumorResultPage({
   typeDetail,
   familyCode,
-  axisInsights,
   familyTagline,
   preloadAvatars,
   shareUrl,
 }: ResultPageProps) {
-  const orderedInsights = axisInsights
-    .slice()
-    .sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
-
   const accentColor = FAMILY_ACCENTS[familyCode];
+  const axisValues = getNormalizedAxisValues(typeDetail.code);
+  const axisOrder: AxisKey[] = ["energy", "absurdity", "tone", "structure"];
 
   return (
     <>
@@ -164,40 +149,37 @@ export default function HumorResultPage({
           />
         }
       >
+        <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft backdrop-blur sm:p-8">
+          <header className="space-y-2">
+            <h2 className="text-2xl font-semibold text-slate-900">あなたのユーモア・バランス</h2>
+            {typeDetail.axesBrief ? (
+              <p className="text-sm leading-relaxed text-slate-600">{typeDetail.axesBrief}</p>
+            ) : (
+              <p className="text-sm leading-relaxed text-slate-600">
+                4つの軸からあなたの笑い方のバランスを可視化しました。
+              </p>
+            )}
+          </header>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {axisOrder.map((axisKey) => (
+              <AxisBar
+                key={axisKey}
+                label={AXIS_METADATA[axisKey].label}
+                value={axisValues[axisKey] ?? 0.5}
+                leftPole={AXIS_POLES[axisKey].left}
+                rightPole={AXIS_POLES[axisKey].right}
+                accentColor={accentColor}
+              />
+            ))}
+          </div>
+        </section>
+
         <section className="rounded-3xl border border-white/80 bg-white/80 p-8 shadow-soft backdrop-blur">
           <div className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold text-slate-900">あなたの笑いの骨格</h2>
               <p className="text-base leading-relaxed text-slate-700">{typeDetail.basicLong}</p>
               <p className="text-base leading-relaxed text-slate-700">{typeDetail.humorLong}</p>
-            </div>
-
-            {typeDetail.axesBrief ? (
-              <div className="rounded-2xl border border-slate-200 bg-white/90 p-4 shadow-sm">
-                <h3 className="text-sm font-semibold text-slate-900">あなたのユーモア・バランス</h3>
-                <p className="mt-1 text-sm leading-relaxed text-slate-600">{typeDetail.axesBrief}</p>
-              </div>
-            ) : null}
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {orderedInsights.map((insight) => (
-                <article key={insight.key} className="rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-sm">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h4 className="text-base font-semibold text-slate-900">{insight.label}</h4>
-                    <span className="text-sm font-semibold text-slate-700">{Math.round(insight.percent)}%</span>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{insight.description}</p>
-                  <div className="mt-4 h-2 w-full rounded-full bg-slate-200">
-                    <div
-                      className="h-2 rounded-full"
-                      style={{
-                        width: `${Math.max(0, Math.min(100, insight.percent))}%`,
-                        background: `linear-gradient(90deg, ${accentColor} 0%, ${accentColor}cc 100%)`,
-                      }}
-                    />
-                  </div>
-                </article>
-              ))}
             </div>
           </div>
         </section>
