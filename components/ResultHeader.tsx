@@ -35,6 +35,8 @@ export default function ResultHeader({
   const [shareStatus, setShareStatus] = useState<ShareStatus>("idle");
   const accentColor = FAMILY_ACCENTS[familyCode];
 
+  const hasFamilyTagline = typeof familyTagline === "string" && familyTagline.trim().length > 0;
+
   const sharePath = useMemo(() => {
     if (shareUrl && !shareUrl.startsWith("http")) {
       return shareUrl;
@@ -155,7 +157,7 @@ export default function ResultHeader({
               <span className="mt-1 text-[28px]/[32px] font-semibold text-slate-800">
                 {typeDetail.code}
               </span>
-              {familyTagline ? (
+              {hasFamilyTagline ? (
                 <p className="mt-2 max-w-xs text-right text-sm text-slate-600">{familyTagline}</p>
               ) : null}
             </div>
