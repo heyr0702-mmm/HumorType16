@@ -144,7 +144,7 @@ export default function ResultHeader({
                 className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-white"
                 style={{ backgroundColor: accentColor }}
               >
-                {familyCode} Family
+                {familyCode} ファミリー
               </span>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{typeDetail.title}</h1>
               <p className="max-w-2xl text-base text-slate-600">{typeDetail.catch}</p>
