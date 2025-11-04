@@ -1,5 +1,7 @@
 import Head from "next/head";
 
+import AdSlot from "../components/AdSlot";
+
 const sections = [
   {
     id: "scope",
@@ -106,6 +108,9 @@ const TermsPage = () => {
             ))}
           </div>
           <p className="mt-12 text-sm text-gray-500">制定日：2025年10月27日</p>
+          <div className="mt-12">
+            <AdSlot adSlot="TERMS_FOOTER" className="mx-auto w-full" />
+          </div>
         </div>
       </main>
     </>

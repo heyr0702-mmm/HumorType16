@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import AdSlot from "../components/AdSlot";
 
 export default function HumorResultGate() {
   const router = useRouter();
@@ -39,7 +38,9 @@ export default function HumorResultGate() {
 
           <div className="rounded-2xl border border-slate-800/60 bg-slate-900/70 p-6">
             <p className="text-sm mb-3 text-slate-200">スポンサー表示</p>
-            <AdSlot className="w-full" />
+            <div className="flex h-32 w-full items-center justify-center rounded-xl border border-dashed border-slate-700/60 bg-slate-900/60 text-sm text-slate-400">
+              広告枠は現在準備中です
+            </div>
             <p className="text-xs mt-3 text-slate-400">
               ※ 広告が表示されない場合はそのまま「診断結果を表示する」を押してください。
             </p>

@@ -1,5 +1,7 @@
 import Head from "next/head";
 
+import AdSlot from "../components/AdSlot";
+
 const AboutPage = () => {
   return (
     <>
@@ -14,6 +16,9 @@ const AboutPage = () => {
         </p>
         <p>本サイトは個人開発プロジェクトとして運営しています。</p>
       </main>
+      <div className="px-6 pb-12">
+        <AdSlot adSlot="ABOUT_FOOTER" className="mx-auto w-full max-w-3xl" />
+      </div>
     </>
   );
 };

@@ -129,6 +129,7 @@ export default function HumorResultPage({
           />
         }
       >
+        <AdSlot adSlot="RESULT_TOP" className="mx-auto w-full max-w-3xl" />
         <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft backdrop-blur sm:p-8">
           <header className="space-y-2">
             <h2 className="text-2xl font-semibold text-slate-900">あなたのユーモア・バランス</h2>
@@ -195,6 +196,8 @@ export default function HumorResultPage({
             ) : null}
           </div>
         </section>
+
+        <AdSlot adSlot="RESULT_MID" className="mx-auto w-full max-w-3xl" />
 
         {typeDetail.scenes.length > 0 ? (
           <section className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-soft backdrop-blur">
@@ -264,7 +267,7 @@ export default function HumorResultPage({
           </section>
         ) : null}
 
-        <AdSlot className="mx-auto w-full max-w-3xl" />
+        <AdSlot adSlot="RESULT_BOTTOM" className="mx-auto w-full max-w-3xl" />
       </Layout>
     </>
   );
