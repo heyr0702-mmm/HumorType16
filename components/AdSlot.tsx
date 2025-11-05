@@ -1,53 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-interface AdSlotProps extends React.HTMLAttributes<HTMLDivElement> {
-  adSlot?: string;
+declare global {
+  interface Window {
+    adsbygoogle: any[] | undefined;
+  }
 }
 
-export default function AdSlot({ className, adSlot, ...rest }: AdSlotProps) {
-  const [ready, setReady] = useState(false);
-
+export default function AdSlot({
+  slotId,
+  minHeight = 280,
+  className = "",
+}: {
+  slotId: string;
+  minHeight?: number;
+  className?: string;
+}) {
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
+    if (typeof window !== "undefined") {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch {
+        // Ignore errors to avoid blocking rendering when AdSense is unavailable.
+      }
     }
-
-    const adsWindow = window as typeof window & {
-      adsbygoogle?: { push: (args: unknown) => void } & unknown[];
-    };
-
-    if (!adsWindow.adsbygoogle || typeof adsWindow.adsbygoogle.push !== "function") {
-      console.warn("Google AdSense is not available; showing placeholder.");
-      return;
-    }
-
-    try {
-      adsWindow.adsbygoogle.push({});
-      setReady(true);
-    } catch (error) {
-      console.warn("Failed to load Google AdSense slot", error);
-    }
-  }, [adSlot]);
-
-  const containerClassName = ["flex justify-center", className].filter(Boolean).join(" ");
+  }, []);
 
   return (
-    <div className={containerClassName} {...rest}>
-      {/* TODO: Read data-ad-client value from an environment variable. */}
-      {ready ? (
-        <ins
-          className="adsbygoogle block w-full"
-          style={{ display: "block" }}
-          data-ad-client="ca-pub-8802783650388237"
-          {...(adSlot ? { "data-ad-slot": adSlot } : {})}
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
-      ) : (
-        <div className="flex h-32 w-full items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-100 text-sm text-slate-500">
-          広告枠（審査中 / ダミー表示です）
-        </div>
-      )}
-    </div>
+    <ins
+      className={`adsbygoogle ${className}`.trim()}
+      style={{ display: "block", minHeight }}
+      data-ad-client="ca-pub-8802783650388237"
+      data-ad-slot={slotId}
+      data-ad-format="auto"
+      data-full-width-responsive="true"
+    />
   );
 }

@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import AdSlot from "../components/AdSlot";
-
 export default function Home() {
   return (
     <>
@@ -58,9 +56,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div className="px-6 pb-12">
-          <AdSlot adSlot="HOME_FOOTER" className="mx-auto w-full max-w-5xl" />
-        </div>
       </main>
     </>
   );

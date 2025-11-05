@@ -1,20 +1,11 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Script from "next/script";
-
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-EV89MLXEXB";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* ✅ Google AdSense (global) */}
-      <Script
-        id="adsense-script"
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8802783650388237"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
       {GA_MEASUREMENT_ID && (
         <>
           <Script

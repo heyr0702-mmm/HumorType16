@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
+import AdSenseLoader from "../../components/AdSenseLoader";
 import AdSlot from "../../components/AdSlot";
 import Layout from "../../components/Layout";
 import RewardedUnlock from "../../components/RewardedUnlock";
@@ -111,6 +112,7 @@ export default function HumorResultPage({
 
   return (
     <>
+      <AdSenseLoader />
       <Head>
         <title>{`${typeDetail.title} – HumorType16`}</title>
         <meta name="description" content={typeDetail.catch} />
@@ -129,7 +131,7 @@ export default function HumorResultPage({
           />
         }
       >
-        <AdSlot adSlot="RESULT_TOP" className="mx-auto w-full max-w-3xl" />
+        <AdSlot slotId="5161326360" className="mx-auto my-12 w-full max-w-3xl" />
         <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft backdrop-blur sm:p-8">
           <header className="space-y-2">
             <h2 className="text-2xl font-semibold text-slate-900">あなたのユーモア・バランス</h2>
@@ -197,7 +199,7 @@ export default function HumorResultPage({
           </div>
         </section>
 
-        <AdSlot adSlot="RESULT_MID" className="mx-auto w-full max-w-3xl" />
+        <AdSlot slotId="1222081353" className="mx-auto my-12 w-full max-w-3xl" />
 
         {typeDetail.scenes.length > 0 ? (
           <section className="rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-soft backdrop-blur">
@@ -267,7 +269,7 @@ export default function HumorResultPage({
           </section>
         ) : null}
 
-        <AdSlot adSlot="RESULT_BOTTOM" className="mx-auto w-full max-w-3xl" />
+        <AdSlot slotId="5847722070" className="mx-auto my-12 w-full max-w-3xl" />
       </Layout>
     </>
   );
