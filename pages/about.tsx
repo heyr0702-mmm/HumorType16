@@ -106,9 +106,6 @@ export default function AboutPage() {
             「なぜあの人のボケが刺さらないのか」「なぜこの人とはずっと笑っていられるのか」——
             その理由をタイプ構造として言語化します。
           </p>
-          <p className="text-sm text-gray-700">
-            ※ 診断ロジックは E / I・A / C・L / E・S / P の組み合わせで構成され、表記（用語）はUI表現として最適化しています。
-          </p>
         </section>
       </main>
     </>
