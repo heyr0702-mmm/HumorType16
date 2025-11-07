@@ -1,6 +1,9 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Script from "next/script";
+import "../styles/globals.css";
+import SiteNav from "../components/SiteNav";
+import SiteFooter from "../components/SiteFooter";
+
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-EV89MLXEXB";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,7 +26,11 @@ export default function App({ Component, pageProps }: AppProps) {
           </Script>
         </>
       )}
-      <Component {...pageProps} />
+      <SiteNav />
+      <main className="mx-auto max-w-5xl px-4 py-6">
+        <Component {...pageProps} />
+      </main>
+      <SiteFooter />
     </>
   );
 }

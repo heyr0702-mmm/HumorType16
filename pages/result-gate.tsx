@@ -32,7 +32,7 @@ export default function HumorResultGate() {
           content="HumorType16 の結果ページに進む前に、データ利用方針や表示順序についてご案内するページです。"
         />
       </Head>
-      <main className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-16 px-4 text-slate-100">
+      <section className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-16 px-4 text-slate-100">
         <div className="mx-auto max-w-3xl rounded-3xl border border-slate-800/60 bg-slate-950/60 p-8 shadow-soft backdrop-blur">
           <header className="space-y-2 text-center">
             <h1 className="text-3xl font-semibold tracking-tight">結果表示について</h1>
@@ -81,7 +81,7 @@ export default function HumorResultGate() {
             )}
           </div>
         </div>
-      </main>
+      </section>
     </>
   );
 }

@@ -8,18 +8,23 @@ interface LayoutProps {
   variant?: "dark" | "light";
 }
 
-const VARIANT_STYLES: Record<NonNullable<LayoutProps["variant"]>, {
-  main: string;
-  title: string;
-  description: string;
-}> = {
+const VARIANT_STYLES: Record<
+  NonNullable<LayoutProps["variant"]>,
+  {
+    wrapper: string;
+    title: string;
+    description: string;
+  }
+> = {
   dark: {
-    main: "min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100",
+    wrapper:
+      "min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100",
     title: "text-4xl font-semibold tracking-tight text-slate-50",
     description: "mx-auto max-w-2xl text-lg text-slate-300",
   },
   light: {
-    main: "min-h-screen bg-gradient-to-br from-surface-50 via-white to-surface-100 py-12 px-4 text-surface-900",
+    wrapper:
+      "min-h-screen bg-gradient-to-br from-surface-50 via-white to-surface-100 py-12 px-4 text-surface-900",
     title: "text-4xl font-semibold tracking-tight text-surface-900",
     description: "mx-auto max-w-2xl text-lg text-surface-600",
   },
@@ -35,7 +40,7 @@ export default function Layout({
   const variantStyles = VARIANT_STYLES[variant];
 
   return (
-    <main className={variantStyles.main}>
+    <section className={variantStyles.wrapper}>
       <div className="mx-auto flex max-w-5xl flex-col gap-10">
         {hero ? (
           hero
@@ -50,6 +55,6 @@ export default function Layout({
 
         {children}
       </div>
-    </main>
+    </section>
   );
 }
