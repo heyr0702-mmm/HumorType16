@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+// ※このページでは AdSense を読み込まない（審査・ポリシー対策）
 const sections = [
   {
     id: "about",
@@ -34,9 +35,7 @@ const sections = [
     title: "Google AdSense について",
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
-        <p>
-          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。
-        </p>
+        <p>当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。</p>
         <p>
           広告配信事業者は Cookie を使用して、利用者の興味・関心に応じた広告を表示する場合があります。Cookie の利用はブラウザの設定や
           <a
@@ -67,9 +66,7 @@ const sections = [
     title: "Google Analytics について",
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
-        <p>
-          当サイトでは、サービス改善のために Google アナリティクス（GA4）を使用してアクセスデータを取得しています。
-        </p>
+        <p>当サイトでは、サービス改善のために Google アナリティクス（GA4）を使用してアクセスデータを取得しています。</p>
         <p>
           取得されるデータには個人を特定できる情報は含まれず、統計的な分析のために利用します。※ 使用している測定IDは「<strong>G-EV89MLXEXB</strong>」です。
         </p>
@@ -95,9 +92,7 @@ const sections = [
     title: "お問い合わせ先",
     body: (
       <div className="space-y-3 leading-7 text-gray-700">
-        <p>
-          本サイトに関するご連絡は、以下の窓口までお願いいたします。
-        </p>
+        <p>本サイトに関するご連絡は、以下の窓口までお願いいたします。</p>
         <p>
           <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-gray-800">contact@humor-type16.example.com</code>
         </p>
@@ -116,25 +111,23 @@ const PrivacyPage = () => {
         <title>プライバシーポリシー | HumorType16</title>
         <meta name="description" content="HumorType16 のプライバシーポリシー" />
       </Head>
-      <main className="min-h-screen bg-white py-16">
-        <div className="max-w-3xl mx-auto px-6 py-12">
+      <section className="space-y-10 py-4">
+        <div className="space-y-4">
           <h1 className="text-3xl font-semibold text-gray-900">プライバシーポリシー</h1>
-          <p className="mt-4 text-gray-600">
+          <p className="text-gray-600">
             本ポリシーは、HumorType16運営チームが運営する HumorType16 における個人情報の取り扱いと利用目的を明確にするためのものです。当サイトをご利用いただくにあたり、以下の内容をご確認ください。
           </p>
-          <div className="mt-10 space-y-10">
-            {sections.map((section) => (
-              <section key={section.id} className="space-y-4">
-                <h2 className="text-2xl font-semibold text-gray-900">{section.title}</h2>
-                {section.body}
-              </section>
-            ))}
-          </div>
-          <p className="mt-12 text-sm text-gray-500">
-            制定日：2025年10月27日 ／ 最終更新日：2025年10月27日
-          </p>
         </div>
-      </main>
+        <div className="space-y-10">
+          {sections.map((section) => (
+            <section key={section.id} className="space-y-4">
+              <h2 className="text-2xl font-semibold text-gray-900">{section.title}</h2>
+              {section.body}
+            </section>
+          ))}
+        </div>
+        <p className="text-sm text-gray-500">制定日：2025年10月27日 ／ 最終更新日：2025年10月27日</p>
+      </section>
     </>
   );
 };

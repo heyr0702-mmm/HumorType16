@@ -1,5 +1,6 @@
 import Head from "next/head";
 
+// ※このページでは AdSense を読み込まない（審査・ポリシー対策）
 const sections = [
   {
     id: "scope",
@@ -37,9 +38,7 @@ const sections = [
     title: "広告の掲載について",
     body: (
       <div className="space-y-4 text-gray-700">
-        <p className="leading-7">
-          当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。
-        </p>
+        <p className="leading-7">当サイトでは、Google が提供する広告配信サービス「Google AdSense」を利用しています。</p>
         <p className="leading-7">
           広告配信事業者は Cookie を使用して、利用者の興味・関心に応じた広告を表示する場合があります。Cookie の利用はブラウザの設定や
           <a
@@ -91,23 +90,23 @@ const TermsPage = () => {
         <title>利用規約 | HumorType16</title>
         <meta name="description" content="HumorType16 の利用規約" />
       </Head>
-      <main className="min-h-screen bg-white py-16">
-        <div className="max-w-3xl mx-auto px-6 py-12">
+      <section className="space-y-10 py-4">
+        <div className="space-y-4">
           <h1 className="text-3xl font-semibold text-gray-900">利用規約</h1>
-          <p className="mt-4 text-gray-600">
+          <p className="text-gray-600">
             本規約は、HumorType16運営チームが提供する当サイトを利用されるすべての方に適用される利用条件を定めるものです。以下の内容をご確認いただき、サービスをご利用ください。
           </p>
-          <div className="mt-10 space-y-10">
-            {sections.map((section) => (
-              <section key={section.id} className="space-y-4">
-                <h2 className="text-2xl font-semibold text-gray-900">{section.title}</h2>
-                {section.body}
-              </section>
-            ))}
-          </div>
-          <p className="mt-12 text-sm text-gray-500">制定日：2025年10月27日</p>
         </div>
-      </main>
+        <div className="space-y-10">
+          {sections.map((section) => (
+            <section key={section.id} className="space-y-4">
+              <h2 className="text-2xl font-semibold text-gray-900">{section.title}</h2>
+              {section.body}
+            </section>
+          ))}
+        </div>
+        <p className="text-sm text-gray-500">制定日：2025年10月27日</p>
+      </section>
     </>
   );
 };
