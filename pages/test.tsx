@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { KeyboardEvent } from "react";
+import type { KeyboardEvent, ReactElement, ReactNode } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import type { NextPage } from "next";
+import Layout from "../components/Layout";
+import Hero from "../components/Hero";
+import ProgressFooter from "../components/ProgressFooter";
 import HumorQuestion, { LikertValue } from "../components/HumorQuestion";
-import ProgressBar from "../components/ProgressBar";
 import type { HumorFamilyCode } from "../components/HumorCharacterBadge";
 import { HUMOR_QUESTIONS, AxisKey } from "../data/humor-questions";
 import { HUMOR_TYPES } from "../data/humor-types";
@@ -17,6 +20,10 @@ type ResponseMap = Record<number, LikertValue | null>;
 type AxisTotals = Record<AxisKey, { sum: number; count: number }>;
 
 type AxisScores = Partial<Record<AxisKey, number>>;
+
+type NextPageWithOptionalLayout<P = {}> = NextPage<P> & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 function computeAxisScores(responses: ResponseMap): AxisScores {
   const totals: AxisTotals = {
@@ -75,7 +82,7 @@ function deriveLikelyType(axisScores: AxisScores): string {
   return matching ?? Object.keys(HUMOR_TYPES)[0];
 }
 
-export default function TestPage() {
+const TestPage: NextPageWithOptionalLayout = () => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -109,7 +116,7 @@ export default function TestPage() {
     [responses]
   );
 
-  const progressPercent = totalQuestions === 0 ? 0 : Math.round((answeredCount / totalQuestions) * 100);
+  const progressPercent = totalQuestions === 0 ? 0 : (answeredCount / totalQuestions) * 100;
 
   const startIndex = currentPage * QUESTIONS_PER_PAGE;
   const endIndex = Math.min(startIndex + QUESTIONS_PER_PAGE, totalQuestions);
@@ -157,6 +164,26 @@ export default function TestPage() {
     [canGoNext, handleNext]
   );
 
+  const footerSlot = (
+    <div
+      role="region"
+      aria-label="進行状況と操作"
+      tabIndex={0}
+      onKeyDown={handleFooterKeyDown}
+      className="outline-none"
+    >
+      <ProgressFooter
+        progressPct={progressPercent}
+        pageText={`${currentPage + 1} / ${totalPages}`}
+        canPrev={currentPage > 0}
+        canNext={canGoNext}
+        onPrev={handleBack}
+        onNext={handleNext}
+        nextLabel={isFinalPage ? "結果へ" : "次へ"}
+      />
+    </div>
+  );
+
   return (
     <>
       <Head>
@@ -167,75 +194,33 @@ export default function TestPage() {
         />
       </Head>
 
-      <div className="min-h-screen flex flex-col bg-white dark:bg-slate-950">
-        <header className="w-full">
-          <div className="mx-auto max-w-3xl px-4 pt-6 pb-4 text-center">
-            <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">ユーモアタイプ診断</h1>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-              直感で答えてください（全{totalQuestions}問）
-            </p>
-          </div>
-        </header>
+      <Layout footerSlot={footerSlot}>
+        <Hero title="ユーモアタイプ診断" subtitle={`直感で回答してください（全${totalQuestions}問）`} />
 
-        <main className="flex-1 grid place-items-center px-4 pb-28 md:pb-32">
-          <div className="w-full max-w-3xl space-y-6">
-            <ol className="space-y-6">
-              {pageQuestions.map((question) => (
-                <li key={question.id} className="list-none">
-                  <HumorQuestion
-                    id={question.id}
-                    prompt={question.prompt}
-                    selected={responses[question.id]}
-                    onChange={(value) => handleAnswerChange(question.id, value)}
-                    groupName={`question-${question.id}`}
-                  />
-                </li>
-              ))}
-            </ol>
-          </div>
-        </main>
-
-        <div
-          role="region"
-          aria-label="進行状況と操作"
-          tabIndex={0}
-          onKeyDown={handleFooterKeyDown}
-          className="fixed bottom-0 left-1/2 w-full max-w-3xl -translate-x-1/2 px-4 pb-[env(safe-area-inset-bottom)]"
-        >
-          <div className="rounded-2xl border border-black/5 bg-white/90 p-4 shadow-lg backdrop-blur dark:border-white/10 dark:bg-slate-900/80">
-            <div className="px-1 [&>div]:static [&>div]:z-auto [&>div]:top-auto">
-              <ProgressBar
-                answeredCount={answeredCount}
-                totalQuestions={totalQuestions}
-                progressPercent={progressPercent}
-              />
-            </div>
-            <div className="mt-4 flex items-center justify-between gap-4">
-              <button
-                type="button"
-                onClick={handleBack}
-                disabled={currentPage === 0}
-                aria-label="前の5問へ戻る"
-                className="h-11 rounded-xl border border-slate-200 px-4 text-sm font-medium text-slate-700 transition disabled:opacity-40 dark:border-slate-700 dark:text-slate-200"
-              >
-                戻る
-              </button>
-              <div className="text-sm text-slate-600 dark:text-slate-300">
-                {currentPage + 1} / {totalPages}
-              </div>
-              <button
-                type="button"
-                onClick={handleNext}
-                aria-label={isFinalPage ? "結果へ進む" : "次の5問へ進む"}
-                disabled={!canGoNext}
-                className="h-11 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-40 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
-              >
-                {isFinalPage ? "結果へ" : "次へ"}
-              </button>
+        <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
+          <div className="min-h-[55vh] grid place-items-center">
+            <div className="w-full max-w-3xl space-y-4">
+              <ol className="space-y-4">
+                {pageQuestions.map((question) => (
+                  <li key={question.id} className="list-none">
+                    <HumorQuestion
+                      id={question.id}
+                      prompt={question.prompt}
+                      selected={responses[question.id] ?? null}
+                      onChange={(value) => handleAnswerChange(question.id, value)}
+                      groupName={`question-${question.id}`}
+                    />
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </Layout>
     </>
   );
-}
+};
+
+TestPage.getLayout = (page: ReactElement) => page;
+
+export default TestPage;

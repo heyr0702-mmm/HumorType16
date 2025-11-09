@@ -1,32 +1,24 @@
-import { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { PropsWithChildren, ReactNode } from "react";
+import AmbientBackground from "./AmbientBackground";
 import Header from "./Header";
 import Footer from "./Footer";
 
-interface LayoutProps {
-  children: ReactNode;
-}
+type LayoutProps = PropsWithChildren<{
+  footerSlot?: ReactNode;
+}>;
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, footerSlot }: LayoutProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#FAF9FF] via-[#FFF9F5] to-[#F7EFE6] text-[#2B2B2B]">
-      <motion.div
-        aria-hidden
-        className="humor-breath-left pointer-events-none absolute -top-24 -left-24 h-[44rem] w-[44rem] rounded-full bg-gradient-to-br from-[#EAE2FF]/50 via-[#EAF6FF]/40 to-[#FFECE5]/40 blur-3xl"
-        animate={{ scale: [1, 1.03, 1], opacity: [0.6, 0.75, 0.6] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="humor-breath-right pointer-events-none absolute -bottom-28 -right-20 h-[38rem] w-[38rem] rounded-full bg-gradient-to-tl from-[#E8E1FF]/45 via-[#E7F3FF]/35 to-[#FFE9E3]/35 blur-3xl"
-        animate={{ scale: [1, 1.05, 1], opacity: [0.55, 0.7, 0.55] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div className="relative z-10 flex min-h-screen flex-col">
-        <Header />
-        <main className="relative flex-1">{children}</main>
-        <Footer />
-      </div>
+    <div className="relative flex min-h-screen flex-col text-zinc-900 dark:text-zinc-50">
+      <AmbientBackground />
+      <Header />
+      <main className="flex-1">{children}</main>
+      {footerSlot ? (
+        <div className="border-t border-black/5 bg-white/70 backdrop-blur dark:border-white/5 dark:bg-zinc-900/70">
+          <div className="mx-auto w-full max-w-5xl px-4 py-4 sm:px-6 lg:px-8">{footerSlot}</div>
+        </div>
+      ) : null}
+      <Footer />
     </div>
   );
 }
