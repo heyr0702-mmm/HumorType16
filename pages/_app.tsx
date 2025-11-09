@@ -1,22 +1,22 @@
-import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import type { ReactElement, ReactNode } from "react";
 import Script from "next/script";
-import "../styles/globals.css";
 import Layout from "../components/Layout";
+import "../styles/globals.css";
 
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+type AppPropsWithFlag = AppProps & {
+  Component: AppProps["Component"] & { useOwnLayout?: boolean };
 };
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || "G-EV89MLXEXB";
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page: ReactElement) => <Layout>{page}</Layout>);
+export default function App({ Component, pageProps }: AppPropsWithFlag) {
+  const pageContent = Component.useOwnLayout ? (
+    <Component {...pageProps} />
+  ) : (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 
   return (
     <>
@@ -37,7 +37,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           </Script>
         </>
       ) : null}
-      {getLayout(<Component {...pageProps} />)}
+      {pageContent}
     </>
   );
 }

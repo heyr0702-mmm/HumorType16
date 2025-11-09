@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import type { KeyboardEvent, ReactElement, ReactNode } from "react";
+import type { KeyboardEvent } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
@@ -20,10 +20,6 @@ type ResponseMap = Record<number, LikertValue | null>;
 type AxisTotals = Record<AxisKey, { sum: number; count: number }>;
 
 type AxisScores = Partial<Record<AxisKey, number>>;
-
-type NextPageWithOptionalLayout<P = {}> = NextPage<P> & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
 
 function computeAxisScores(responses: ResponseMap): AxisScores {
   const totals: AxisTotals = {
@@ -82,7 +78,7 @@ function deriveLikelyType(axisScores: AxisScores): string {
   return matching ?? Object.keys(HUMOR_TYPES)[0];
 }
 
-const TestPage: NextPageWithOptionalLayout = () => {
+const TestPage: NextPage = () => {
   const router = useRouter();
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -198,7 +194,7 @@ const TestPage: NextPageWithOptionalLayout = () => {
         <Hero title="ユーモアタイプ診断" subtitle={`直感で回答してください（全${totalQuestions}問）`} />
 
         <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
-          <div className="min-h-[55vh] grid place-items-center">
+          <div className="grid min-h-[55vh] place-items-center">
             <div className="w-full max-w-3xl space-y-4">
               <ol className="space-y-4">
                 {pageQuestions.map((question) => (
@@ -221,6 +217,6 @@ const TestPage: NextPageWithOptionalLayout = () => {
   );
 };
 
-TestPage.getLayout = (page: ReactElement) => page;
+(TestPage as NextPage & { useOwnLayout?: boolean }).useOwnLayout = true;
 
 export default TestPage;
