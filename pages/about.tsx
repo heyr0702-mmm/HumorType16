@@ -1,87 +1,123 @@
 import Head from "next/head";
 
-const ELEMENTS = [
-  {
-    id: "direction",
-    title: "Direction",
-    heading: "笑いの出力方向",
-    body:
-      "E（External）は場へ広げ、I（Internal）は内へ熟し一点で届ける。あなたが笑いを放つ矢印を描きます。",
-  },
-  {
-    id: "approach",
-    title: "Approach",
-    heading: "笑いの組み立て方",
-    body:
-      "A（Absurd）は飛躍で驚かせ、C（Coherent）は整合で納得させる。どんなロジックで笑いを紡ぐかを可視化します。",
-  },
-  {
-    id: "tone",
-    title: "Tone",
-    heading: "笑いの温度",
-    body:
-      "L（Lyrical）は共感で包み、E（Edgy）は切れ味で刺す。声色とニュアンスの揺らぎを言語化します。",
-  },
-  {
-    id: "style",
-    title: "Style",
-    heading: "笑いの時間軸",
-    body:
-      "S（Spontaneous）は瞬間を拾い、P（Planned）は構成で回収する。テンポ感と伏線の扱い方を読み解きます。",
-  },
-];
-
-export default function AboutPage() {
+export default function About() {
   return (
     <>
       <Head>
         <title>About | HumorType16</title>
         <meta
           name="description"
-          content="HumorType16は、あなたの『笑いの骨格』を4つの感性要素で読み解き、16タイプに分類するユーモア診断です。"
+          content="HumorType16は、あなたのユーモアの“骨格”を4つの感性でひもとし、言葉にする自己理解の診断です。どんなユーモアを生み、どんなユーモアに惹かれるのかを読み解きながら、あなたらしいつながり方を見つけていきます。"
         />
       </Head>
-      <section className="relative z-10 mx-auto w-full max-w-5xl px-6 py-16 sm:px-8 md:py-20">
-        <header className="space-y-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#777777]">About</p>
-          <h1 className="text-4xl font-extrabold leading-tight tracking-[-0.02em] text-[#2B2B2B] md:text-5xl">
-            ユーモアを、感性の設計図で読み解く。
-          </h1>
-          <p className="max-w-3xl text-lg leading-relaxed text-[#5A5A5A]">
-            <strong>HumorType16</strong> は、あなたの「笑いの骨格」を4つの感性要素で読み解き、
-            <strong>「どんなユーモアを生み、どんなユーモアに惹かれるのか」</strong>
-            を可視化する診断です。思考のクセ、感情の流れ、タイミングの習性——ユーモアのリズムを丁寧に言語化します。
-          </p>
-        </header>
 
-        <section className="mt-16 space-y-10">
-          <h2 className="text-2xl font-semibold text-[#2B2B2B]">4つの感性要素</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {ELEMENTS.map((element) => (
-              <article
-                key={element.id}
-                className="rounded-2xl border border-white/60 bg-white/70 p-6 shadow-sm backdrop-blur-sm transition duration-600 ease-in-out"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#777777]">{element.title}</p>
-                <h3 className="mt-3 text-lg font-semibold text-[#2B2B2B]">{element.heading}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-[#5A5A5A]">{element.body}</p>
-              </article>
-            ))}
+      <main className="mx-auto max-w-3xl px-5 py-12">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          あなたのユーモアを言葉にする診断
+        </h1>
+
+        <section className="mt-8 space-y-4">
+          <h2 className="text-xl font-semibold">HumorType16とは</h2>
+          <p>
+            HumorType16は、
+            <strong>あなたのユーモアの“骨格”を4つの感性でひもとし、言葉にする自己理解の診断</strong>
+            です。
+          </p>
+          <p>
+            SNSのやり取り、恋人とのテンポ、友達とのノリ、職場の空気。
+            私たちが「居心地がいい」と感じる瞬間には、いつも
+            <strong>ユーモアの相性</strong>
+            が潜んでいます。
+          </p>
+          <p>
+            この診断では、
+            <strong>どんなユーモアを生み、どんなユーモアに惹かれるのか</strong>
+            を読み解きながら、あなたらしい
+            <strong>つながり方</strong>
+            を見つけていきます。
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-5">
+          <h2 className="text-xl font-semibold">4つの感性要素</h2>
+
+          <div>
+            <h3 className="font-semibold">Direction｜ユーモアの向かう矢印</h3>
+            <p className="mt-1">
+              <strong>E（External）／I（Internal）</strong>
+            </p>
+            <p className="mt-1">
+              外に広げるか、内で深めるか。場を明るく照らすタイプか、静かに味わうタイプかを映します。
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold">Approach｜おもしろさの組み立て方</h3>
+            <p className="mt-1">
+              <strong>A（Absurd）／C（Coherent）</strong>
+            </p>
+            <p className="mt-1">
+              ズラして驚かせるか、筋を通して納得させるか。あなたの“おもしろさの作り方”を表します。
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold">Tone｜空気の温度</h3>
+            <p className="mt-1">
+              <strong>L（Lyrical）／E（Edgy）</strong>
+            </p>
+            <p className="mt-1">
+              共感で包みこむか、切れ味で光らせるか。やさしさと鋭さ、そのバランスを描き出します。
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold">Style｜時間のリズム</h3>
+            <p className="mt-1">
+              <strong>S（Spontaneous）／P（Planned）</strong>
+            </p>
+            <p className="mt-1">
+              その瞬間を掴むか、構成で回収するか。テンポや“間”のセンスを表します。
+            </p>
           </div>
         </section>
 
-        <section className="mt-16 space-y-4">
-          <h2 className="text-2xl font-semibold text-[#2B2B2B]">何がわかるのか</h2>
-          <p className="text-base leading-relaxed text-[#5A5A5A]">
-            診断では、自分のユーモアの特徴だけでなく、仲間・恋人・職場など日常のコミュニケーションを整えるヒントが得られます。
-            なぜあの人のボケが刺さらないのか、どうしてこの人とはずっと笑っていられるのか——ユーモアの構造として言語化できます。
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-semibold">何がわかるのか</h2>
+          <p>
+            「この人とはテンポが合う」「自然にふざけられる」——そんな感覚の
+            <strong>背景にあるユーモアの型</strong>
+            がわかります。
           </p>
-          <p className="text-base leading-relaxed text-[#5A5A5A]">
-            自分の笑いのリズムを理解することで、場に合わせた伝え方を選べるようになり、相手とのテンポのズレも自然に整っていく。
-            HumorType16は、ユーモアを<strong>“関係をラクにする知性”</strong>として再発見するための診断です。
+          <p>
+            恋人・友達・職場など、それぞれの関係の中で、
+            <strong>伝え方や距離感の整え方</strong>
+            が自然に見えてきます。これは“笑わせ方”ではなく、
+            <strong>自分らしい感性で関わるための自己理解</strong>
+            です。
           </p>
         </section>
-      </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-semibold">どう楽しむ？</h2>
+          <p>
+            まずは自分のタイプを知り、次に身近な人にも受けてもらいましょう。結果を見せ合うと、
+            <strong>ユーモアの“翻訳の違い”</strong>
+            が見えてきます。違いを比べながら、
+            <strong>合うテンポや心地よい間合い</strong>
+            を一緒に見つけていく——その過程こそ、この診断の面白さです。
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-3">
+          <h2 className="text-xl font-semibold">最後に</h2>
+          <p>
+            自分のユーモアを言葉にできると、その場に合わせた伝え方や、人との距離の取り方がやさしく整います。
+            <strong>あなたらしいユーモアの感性</strong>
+            を、ここから見つめてください。
+          </p>
+        </section>
+      </main>
     </>
   );
 }
