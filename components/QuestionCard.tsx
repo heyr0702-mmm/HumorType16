@@ -22,8 +22,8 @@ export default function QuestionCard({
 }: QuestionCardProps) {
   const headingId = `question-${id}-prompt`;
   return (
-    <article className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-lg backdrop-blur">
-      <h2 id={headingId} className="text-lg font-semibold leading-relaxed text-slate-100">
+    <article className="rounded-2xl border border-white/60 bg-white/70 p-6 shadow-sm backdrop-blur-sm">
+      <h2 id={headingId} className="text-lg font-semibold leading-relaxed text-[#2B2B2B]">
         {prompt}
       </h2>
       <div className="mt-6">

@@ -55,7 +55,7 @@ export default function ResultHeader({
 
   const bandStyle = useMemo(
     () => ({
-      background: `linear-gradient(135deg, ${typeDetail.themeSoft ?? "#f1f5f9"} 0%, rgba(255, 255, 255, 0.92) 65%)`,
+      background: `linear-gradient(135deg, ${typeDetail.themeSoft ?? "#FAF9FF"} 0%, rgba(255, 255, 255, 0.9) 65%)`,
     }),
     [typeDetail.themeSoft]
   );
@@ -99,7 +99,6 @@ export default function ResultHeader({
     () => ({
       backgroundColor: accentColor,
       color: "#fff",
-      boxShadow: `0 16px 30px -15px ${accentColor}70`,
       borderColor: `${accentColor}20`,
     }),
     [accentColor]
@@ -107,11 +106,20 @@ export default function ResultHeader({
 
   const secondaryButtonStyle = useMemo<CSSProperties>(
     () => ({
-      borderColor: `${accentColor}33`,
+      borderColor: `${accentColor}40`,
       color: accentColor,
-      backgroundColor: "rgba(255, 255, 255, 0.85)",
+      backgroundColor: "rgba(255, 255, 255, 0.9)",
     }),
     [accentColor]
+  );
+
+  const tertiaryButtonStyle = useMemo<CSSProperties>(
+    () => ({
+      borderColor: "rgba(31, 31, 31, 0.1)",
+      color: "#5A5A5A",
+      backgroundColor: "rgba(255, 255, 255, 0.85)",
+    }),
+    []
   );
 
   const focusRingStyle = useMemo<CSSVarStyle>(
@@ -125,13 +133,13 @@ export default function ResultHeader({
 
   return (
     <section
-      className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-soft"
+      className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/80 shadow-sm backdrop-blur-sm"
       style={bandStyle}
     >
       <div className="relative flex flex-col gap-6 p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-            <div className="h-28 w-28 overflow-hidden rounded-3xl border border-white/70 bg-white/70 shadow-sm">
+            <div className="h-28 w-28 overflow-hidden rounded-2xl border border-white/70 bg-white/70 shadow-sm">
               <Image
                 src={typeDetail.avatar}
                 alt={`${typeDetail.title}のアバター`}
@@ -141,7 +149,7 @@ export default function ResultHeader({
                 priority
               />
             </div>
-            <div className="space-y-3 text-slate-900">
+            <div className="space-y-3 text-[#2B2B2B]">
               <span
                 className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-white"
                 style={{ backgroundColor: accentColor }}
@@ -149,23 +157,23 @@ export default function ResultHeader({
                 {familyCode} ファミリー
               </span>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{typeDetail.title}</h1>
-              <p className="max-w-2xl text-base text-slate-600">{typeDetail.catch}</p>
+              <p className="max-w-2xl text-base text-[#5A5A5A]">{typeDetail.catch}</p>
             </div>
           </div>
           <div className="flex items-start justify-end text-right">
             <div className="flex flex-col items-end text-right">
-              <span className="mt-1 text-[28px]/[32px] font-semibold text-slate-800">
+              <span className="mt-1 text-[28px]/[32px] font-semibold text-[#2B2B2B]">
                 {typeDetail.code}
               </span>
               {hasFamilyTagline ? (
-                <p className="mt-2 max-w-xs text-right text-sm text-slate-600">{familyTagline}</p>
+                <p className="mt-2 max-w-xs text-right text-sm text-[#5A5A5A]">{familyTagline}</p>
               ) : null}
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-slate-200 pt-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-slate-500">
+        <div className="flex flex-col gap-4 border-t border-white/70 pt-4 text-[#5A5A5A] sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm">
             あなたの診断結果をシェアしたり、もう一度チャレンジして友だちと盛り上がりましょう。
           </p>
           <div className="flex flex-wrap items-center gap-3">
@@ -173,7 +181,7 @@ export default function ResultHeader({
               href={xShareHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:brightness-110"
+              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition duration-300 ease-in-out hover:opacity-90"
               style={{ ...actionButtonStyle, ...focusRingStyle }}
               data-testid="share-x-button"
             >
@@ -183,7 +191,7 @@ export default function ResultHeader({
               href={lineShareHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:brightness-105"
+              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition duration-300 ease-in-out hover:opacity-90"
               style={{ ...secondaryButtonStyle, ...focusRingStyle }}
               data-testid="share-line-button"
             >
@@ -192,16 +200,16 @@ export default function ResultHeader({
             <button
               type="button"
               onClick={handleCopyLink}
-              className="focus-ring inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-slate-400 hover:text-slate-800"
-              style={focusRingStyle}
+              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition duration-300 ease-in-out hover:opacity-90"
+              style={{ ...tertiaryButtonStyle, ...focusRingStyle }}
               data-testid="copy-link-button"
             >
               {shareStatus === "copied" ? "リンクをコピー済" : "リンクをコピー"}
             </button>
             <Link
               href="/test"
-              className="focus-ring inline-flex items-center gap-2 rounded-full border border-slate-300/80 bg-white/70 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-400 hover:text-slate-900"
-              style={focusRingStyle}
+              className="focus-ring inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold text-[#2B2B2B] shadow-sm transition duration-300 ease-in-out hover:opacity-90"
+              style={{ ...tertiaryButtonStyle, ...focusRingStyle }}
               data-testid="retry-button"
             >
               もう一度診断

@@ -1,60 +1,32 @@
 import { ReactNode } from "react";
+import { motion } from "framer-motion";
+import Header from "./Header";
+import Footer from "./Footer";
 
 interface LayoutProps {
-  title?: string;
-  description?: string;
   children: ReactNode;
-  hero?: ReactNode;
-  variant?: "dark" | "light";
 }
 
-const VARIANT_STYLES: Record<
-  NonNullable<LayoutProps["variant"]>,
-  {
-    wrapper: string;
-    title: string;
-    description: string;
-  }
-> = {
-  dark: {
-    wrapper:
-      "min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 py-12 px-4 text-slate-100",
-    title: "text-4xl font-semibold tracking-tight text-slate-50",
-    description: "mx-auto max-w-2xl text-lg text-slate-300",
-  },
-  light: {
-    wrapper:
-      "min-h-screen bg-gradient-to-br from-surface-50 via-white to-surface-100 py-12 px-4 text-surface-900",
-    title: "text-4xl font-semibold tracking-tight text-surface-900",
-    description: "mx-auto max-w-2xl text-lg text-surface-600",
-  },
-};
-
-export default function Layout({
-  title,
-  description,
-  children,
-  hero,
-  variant = "dark",
-}: LayoutProps) {
-  const variantStyles = VARIANT_STYLES[variant];
-
+export default function Layout({ children }: LayoutProps) {
   return (
-    <section className={variantStyles.wrapper}>
-      <div className="mx-auto flex max-w-5xl flex-col gap-10">
-        {hero ? (
-          hero
-        ) : (
-          (title || description) && (
-            <header className="flex flex-col gap-4 text-center">
-              {title ? <h1 className={variantStyles.title}>{title}</h1> : null}
-              {description ? <p className={variantStyles.description}>{description}</p> : null}
-            </header>
-          )
-        )}
-
-        {children}
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#FAF9FF] via-[#FFF9F5] to-[#F7EFE6] text-[#2B2B2B]">
+      <motion.div
+        aria-hidden
+        className="humor-breath-left pointer-events-none absolute -top-24 -left-24 h-[44rem] w-[44rem] rounded-full bg-gradient-to-br from-[#EAE2FF]/50 via-[#EAF6FF]/40 to-[#FFECE5]/40 blur-3xl"
+        animate={{ scale: [1, 1.03, 1], opacity: [0.6, 0.75, 0.6] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="humor-breath-right pointer-events-none absolute -bottom-28 -right-20 h-[38rem] w-[38rem] rounded-full bg-gradient-to-tl from-[#E8E1FF]/45 via-[#E7F3FF]/35 to-[#FFE9E3]/35 blur-3xl"
+        animate={{ scale: [1, 1.05, 1], opacity: [0.55, 0.7, 0.55] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="relative z-10 flex min-h-screen flex-col">
+        <Header />
+        <main className="relative flex-1">{children}</main>
+        <Footer />
       </div>
-    </section>
+    </div>
   );
 }
