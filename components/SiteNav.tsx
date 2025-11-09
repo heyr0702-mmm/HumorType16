@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 const items = [
   { href: "/", label: "診断" },
   { href: "/about", label: "About" },
+  { href: "/vision", label: "Vision" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
 ];

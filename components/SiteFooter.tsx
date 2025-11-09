@@ -8,6 +8,7 @@ export default function SiteFooter() {
         <nav className="flex flex-wrap gap-4">
           <Link href="/">診断</Link>
           <Link href="/about">About</Link>
+          <Link href="/vision">Vision</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
         </nav>
