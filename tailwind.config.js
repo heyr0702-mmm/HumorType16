@@ -28,12 +28,14 @@ module.exports = {
           900: "#0f172a",
           950: "#020617",
         },
+        primary: "#6E56CF",
+        "primary-hover": "#5B45B5",
+        "body-strong": "#2B2B2B",
+        "body-muted": "#5A5A5A",
+        "body-subtle": "#777777",
       },
       borderRadius: {
         "radius-2xl": "1.5rem",
-      },
-      boxShadow: {
-        "soft": "0 12px 40px -12px rgba(15, 23, 42, 0.18)",
       },
       fontSize: {
         display: ["3.5rem", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
@@ -41,6 +43,9 @@ module.exports = {
         h2: ["1.875rem", { lineHeight: "1.25", letterSpacing: "-0.005em" }],
         body: ["1rem", { lineHeight: "1.7" }],
         small: ["0.875rem", { lineHeight: "1.6" }],
+      },
+      transitionDuration: {
+        600: "600ms",
       },
     },
   },

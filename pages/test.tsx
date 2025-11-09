@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Layout from "../components/Layout";
 import ProgressBar from "../components/ProgressBar";
 import QuestionCard from "../components/QuestionCard";
 import { LikertValue } from "../components/Scale7";
 import type { HumorFamilyCode } from "../components/HumorCharacterBadge";
 import { HUMOR_QUESTIONS, AxisKey } from "../data/humor-questions";
 import { HUMOR_TYPES } from "../data/humor-types";
+import { trackEvent } from "@/utils/analytics";
 
 const QUESTIONS_PER_PAGE = 5;
 const FAMILY_CODES: HumorFamilyCode[] = ["EA", "EC", "IA", "IC"];
@@ -88,8 +88,8 @@ export default function HumorTestWizard() {
   const totalPages = Math.max(1, Math.ceil(totalQuestions / QUESTIONS_PER_PAGE));
 
   useEffect(() => {
-    // TODO: 診断開始イベントを送信
-  }, []);
+    trackEvent("begin_test", { total_questions: totalQuestions });
+  }, [totalQuestions]);
 
   const answeredCount = useMemo(
     () =>
@@ -127,7 +127,7 @@ export default function HumorTestWizard() {
         window.localStorage.setItem("humorType16-last-result", targetType);
       }
 
-      // TODO: 診断完了イベントを送信
+      trackEvent("complete_test", { result_type: targetType });
       void router.push("/result-gate");
       return;
     }
@@ -145,63 +145,78 @@ export default function HumorTestWizard() {
         />
       </Head>
 
-      <Layout
-        title="HumorType16 診断テスト"
-        description="30問のユーモアタイプ診断です。1ページにつき5問ずつ回答してください。結果はすべて回答が終わったあとに表示されます。"
-      >
-        <ProgressBar
-          answeredCount={answeredCount}
-          totalQuestions={totalQuestions}
-          progressPercent={progressPercent}
-        />
+      <section className="relative z-10 mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 md:py-20">
+        <header className="max-w-3xl space-y-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#777777]">Test</p>
+          <h1 className="text-3xl font-extrabold leading-tight tracking-[-0.01em] text-[#2B2B2B] md:text-4xl">
+            あなたのユーモアのリズムを測る30問。
+          </h1>
+          <p className="text-base leading-relaxed text-[#5A5A5A]">
+            直感で回答してみましょう。各ページ5問ずつ、全体でおよそ5分ほどの診断です。ユーモアのテンポが少しずつ輪郭を帯びていきます。
+          </p>
+        </header>
 
-        <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-          <div className="flex flex-col gap-2 border-b border-slate-800 pb-4 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm font-medium text-slate-300">
-              ステップ {currentPage + 1} / {totalPages}
-            </p>
-            <p className="text-sm text-slate-400">質問 {start + 1}〜{Math.min(totalQuestions, end)}</p>
+        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.6fr)]">
+          <aside className="order-last lg:order-first">
+            <ProgressBar
+              answeredCount={answeredCount}
+              totalQuestions={totalQuestions}
+              progressPercent={progressPercent}
+            />
+          </aside>
+
+          <div className="order-first space-y-6 lg:order-last">
+            <div className="rounded-2xl border border-white/60 bg-white/70 p-6 shadow-sm backdrop-blur-sm">
+              <div className="flex flex-col gap-3 text-xs text-[#777777] sm:flex-row sm:items-center sm:justify-between">
+                <span className="font-semibold uppercase tracking-[0.2em]">
+                  Step {currentPage + 1} / {totalPages}
+                </span>
+                <span>
+                  質問 {start + 1}〜{Math.min(totalQuestions, end)}
+                </span>
+              </div>
+
+              <div className="mt-6 space-y-6">
+                {pageQuestions.map((question) => (
+                  <QuestionCard
+                    key={question.id}
+                    id={question.id}
+                    prompt={question.prompt}
+                    value={responses[question.id] ?? null}
+                    onChange={(value) => handleAnswerChange(question.id, value)}
+                    groupName={`page-${currentPage}-q-${question.id}`}
+                  />
+                ))}
+
+                {pageQuestions.length === 0 ? (
+                  <p className="text-center text-sm text-[#5A5A5A]">
+                    質問データを準備中です。HumorType16 の完全版をお楽しみに！
+                  </p>
+                ) : null}
+              </div>
+
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <button
+                  type="button"
+                  className="rounded-full border border-[#2B2B2B]/15 px-6 py-3 text-sm font-medium text-[#5A5A5A] transition duration-300 ease-in-out hover:border-[#2B2B2B]/30 hover:text-[#2B2B2B] disabled:cursor-not-allowed disabled:opacity-40"
+                  onClick={handleBack}
+                  disabled={currentPage === 0}
+                >
+                  前のページへ
+                </button>
+                <button
+                  type="button"
+                  className="rounded-full bg-[#6E56CF] px-8 py-3 text-sm font-semibold text-white shadow-sm transition duration-300 ease-in-out hover:bg-[#5B45B5] disabled:cursor-not-allowed disabled:opacity-40"
+                  onClick={handleNext}
+                  disabled={!canGoNext || totalQuestions === 0}
+                >
+                  {isFinalPage ? "診断結果を見る" : "次のページへ"}
+                </button>
+              </div>
+            </div>
           </div>
-
-          <div className="mt-6 grid gap-6">
-            {pageQuestions.map((question) => (
-              <QuestionCard
-                key={question.id}
-                id={question.id}
-                prompt={question.prompt}
-                value={responses[question.id] ?? null}
-                onChange={(value) => handleAnswerChange(question.id, value)}
-                groupName={`page-${currentPage}-q-${question.id}`}
-              />
-            ))}
-
-            {pageQuestions.length === 0 ? (
-              <p className="text-center text-slate-400">
-                質問データを準備中です。HumorType16 の完全版をお楽しみに！
-              </p>
-            ) : null}
-          </div>
-
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <button
-              type="button"
-              className="rounded-full border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:border-slate-500 hover:text-slate-100 disabled:cursor-not-allowed disabled:opacity-50"
-              onClick={handleBack}
-              disabled={currentPage === 0}
-            >
-              前のページへ
-            </button>
-            <button
-              type="button"
-              className="focus-ring rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 px-8 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
-              onClick={handleNext}
-              disabled={!canGoNext || totalQuestions === 0}
-            >
-              {isFinalPage ? "診断結果を見る" : "次のページへ"}
-            </button>
-          </div>
-        </section>
-      </Layout>
+        </div>
+      </section>
     </>
   );
 }

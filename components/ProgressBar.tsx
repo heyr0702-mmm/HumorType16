@@ -4,17 +4,16 @@ interface ProgressBarProps {
   progressPercent: number;
 }
 
-export default function ProgressBar({
-  answeredCount,
-  totalQuestions,
-  progressPercent,
-}: ProgressBarProps) {
+export default function ProgressBar({ answeredCount, totalQuestions, progressPercent }: ProgressBarProps) {
   return (
-    <div className="sticky top-6 z-20">
-      <section className="rounded-3xl border border-slate-800/60 bg-slate-900/80 p-6 shadow-xl backdrop-blur">
-        <p className="text-sm uppercase tracking-wider text-slate-400">進捗</p>
+    <div className="sticky top-28 z-20">
+      <section className="rounded-2xl border border-white/60 bg-white/70 p-6 shadow-sm backdrop-blur-sm">
+        <div className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.2em] text-[#777777]">
+          <span>Progress</span>
+          <span>{progressPercent}%</span>
+        </div>
         <div
-          className="mt-2 h-3 w-full overflow-hidden rounded-full bg-slate-800"
+          className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-white/80"
           role="progressbar"
           aria-valuenow={progressPercent}
           aria-valuemin={0}
@@ -22,12 +21,12 @@ export default function ProgressBar({
           aria-label="回答進捗"
         >
           <div
-            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all"
+            className="h-full rounded-full bg-primary transition-all duration-600 ease-in-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <p className="mt-2 text-sm font-medium text-slate-200">
-          回答済み {answeredCount} / {totalQuestions}（{progressPercent}%）
+        <p className="mt-3 text-xs text-[#5A5A5A]">
+          回答済み {answeredCount} / {totalQuestions}
         </p>
       </section>
     </div>

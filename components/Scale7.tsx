@@ -60,7 +60,7 @@ export default function Scale7({
 
   return (
     <div>
-      <div className="mb-3 flex items-center justify-between text-sm text-slate-400">
+      <div className="mb-3 flex items-center justify-between text-xs font-medium uppercase tracking-[0.12em] text-[#777777]">
         <span>{lowLabel}</span>
         <span>{highLabel}</span>
       </div>
@@ -84,10 +84,10 @@ export default function Scale7({
               ref={(element) => {
                 optionRefs.current[index] = element;
               }}
-              className={`focus-ring flex h-14 items-center justify-center rounded-2xl border text-base font-semibold transition ${
+              className={`focus-ring flex h-12 items-center justify-center rounded-xl border text-sm font-semibold transition duration-600 ease-in-out shadow-sm md:h-14 ${
                 selected
-                  ? "border-blue-400 bg-blue-500/10 text-blue-100 shadow-inner"
-                  : "border-slate-800 bg-slate-900/80 text-slate-300 hover:border-slate-600 hover:bg-slate-900/60"
+                  ? "border-primary bg-primary/10 text-[#2B2B2B]"
+                  : "border-transparent bg-white/90 text-[#5A5A5A] hover:ring-1 hover:ring-primary/30"
               }`}
               tabIndex={
                 selected
