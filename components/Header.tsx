@@ -2,10 +2,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const NAV_ITEMS = [
-  { href: "/test", label: "診断する" },
+  { href: "/", label: "Home" },
+  { href: "/test", label: "診断" },
   { href: "/about", label: "About" },
   { href: "/vision", label: "Vision" },
-  { href: "/privacy", label: "プライバシーポリシー" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export default function Header() {

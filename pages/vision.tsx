@@ -1,73 +1,92 @@
 import Head from "next/head";
-import Hero from "../components/Hero";
+import Link from "next/link";
+import Layout from "../components/Layout";
+import Section from "../components/Section";
 
 export default function VisionPage() {
   return (
-    <>
+    <Layout>
       <Head>
-        <title>HumorType16 | Vision</title>
+        <title>Vision | HumorType16</title>
         <meta
           name="description"
-          content="HumorType16のビジョン。ユーモアは才能ではなく感性のテンポ。違いが響き合う世界＝Humorverseを目指します。"
+          content="違いが響き合う世界をつくる。HumorType16は、ユーモアを才能ではなく感性のテンポとして捉え、誰もが自分のリズムを誇れるHumorverseを描きます。"
         />
       </Head>
 
-      <Hero
-        title="Vision"
-        subtitle="ユーモアを共有言語に。ホームのトーン・余白・タイポと完全一致で届けます。"
-      />
-
-      <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
-        <div className="prose prose-zinc max-w-none dark:prose-invert">
-          <h2>違いが響き合う世界をつくる。</h2>
-          <p>
-            ユーモアは才能ではなく、感性のテンポ。HumorType16は、誰もが自分のリズムを誇れるHumorverseを描きます。
+      <main className="mx-auto max-w-5xl px-4 md:px-6 py-10 md:py-16 space-y-6 md:space-y-10">
+        {/* Hero */}
+        <header className="text-center space-y-4">
+          <p className="text-sm tracking-wide text-neutral-500">Key Message</p>
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">違いが響き合う世界をつくる。</h1>
+          <p className="text-neutral-700 md:text-lg">
+            ユーモアは才能ではなく、感性のテンポ。HumorType16は、誰もが自分のリズムを誇れる<strong>Humorverse</strong>を描きます。
           </p>
+        </header>
 
-          <h2>ユーモアって、誰のものだろう。</h2>
+        <Section eyebrow="WHY" title="ユーモアって、誰のものだろう。">
           <p>
             SNSのタイムラインには、誰かの“おもしろさ”があふれています。でもその中で、「自分は面白くない」「うまく返せない」と感じる瞬間もあります。
           </p>
           <p>
-            けれど本当は——<strong>ユーモアは才能ではなく、感性のテンポ</strong>。人それぞれの感じ方と伝え方、リズムが違うだけ。その違いこそが、私たちのユーモアの始まりです。
+            けれど本当は——<strong>ユーモアは才能ではなく、感性のテンポ</strong>。人それぞれの感じ方と伝え方、リズムが違うだけ。
+            その違いこそが、私たちのユーモアの始まりです。
           </p>
+        </Section>
 
-          <h2>ユーモアとは、感情をやさしく翻訳する方法。</h2>
+        <Section eyebrow="PHILOSOPHY" title="ユーモアとは、感情をやさしく翻訳する方法。">
           <p>
-            怒りや緊張をやわらげたり、距離を近づけたり。違和感を笑いに変えて、空気を整える。ユーモアは、<strong>感情を安全に共有するための方法</strong>だと私たちは考えています。
+            怒りや緊張をやわらげたり、距離を近づけたり。違和感を笑いに変えて、空気を整える。
+            ユーモアは、<strong>感情を安全に共有するための方法</strong>だと私たちは考えています。
           </p>
           <p>
-            それは“持っている／いない”ではなく、<strong>どう感じ、どう表現するか</strong>の違い。HumorType16は、その翻訳スタイルを4つの感性要素で読み解きます。
+            それは“持っている／いない”ではなく、どう感じ、どう表現するかの違い。
+            HumorType16は、その<strong>翻訳スタイル</strong>を4つの感性要素で読み解きます。
           </p>
+        </Section>
 
-          <h2>違いが響き合う世界を描く。</h2>
+        <Section eyebrow="WORLDVIEW" title="違いが響き合う世界を描く。">
           <p>
-            私たちが目指すのは、「面白い人」だけが笑わせる世界ではなく、<strong>それぞれのユーモアが共鳴し合う世界</strong>です。
+            私たちが目指すのは、「面白い人」だけが笑わせる世界ではなく、それぞれのユーモアが<strong>共鳴</strong>し合う世界です。
           </p>
           <p>
-            誰かのユーモアが別の誰かをやさしく包み、静かな人のテンポが場を整えるリズムになる。違いを競うのではなく、<strong>響き合いとして受け取る</strong>。それが、私たちの描く <strong>Humorverse</strong> のかたちです。
+            誰かのユーモアが別の誰かをやさしく包み、静かな人のテンポが場を整えるリズムになる。
+            違いを競うのではなく、<strong>響き合い</strong>として受け取る。それが、私たちの描く Humorverse のかたちです。
           </p>
+        </Section>
 
-          <h2>“センス”という言葉の外側に、自由をつくる。</h2>
+        <Section eyebrow="BEYOND 'SENSE'" title="“センス”という言葉の外側に、自由をつくる。">
           <p>
-            「センスがある」「ウケる」「面白い」といった言葉は、ときに優劣の物差しとして使われがちでした。でも本当は、笑いのセンスにも<strong>構造とリズム</strong>がある。その違いを言葉にできれば、誰もが自分の感性を誇れる。
+            「センスがある」「ウケる」「面白い」といった言葉は、ときに優劣の物差しとして使われがちでした。
+            でも本当は、<strong>笑いのセンスにも構造とリズム</strong>がある。
+            その違いを言葉にできれば、誰もが自分の感性を誇れる。
           </p>
           <p>
             HumorType16は、「笑い」を競うものから、「ユーモア」を<strong>共鳴のデザイン</strong>へと変えるために生まれました。
           </p>
+        </Section>
 
-          <blockquote>
+        <Section eyebrow="CALL TO ACTION" title="最後のフレーズ">
+          <div className="rounded-xl border border-black/5 p-5 bg-white/60">
             <p>
-              あなたのユーモアは、あなたにしか奏でられないリズムです。それが誰かを笑顔にし、場をやわらげ、世界を少しだけ優しくする。
+              あなたのユーモアは、あなたにしか奏でられないリズムです。
+              それが誰かを笑顔にし、場をやわらげ、世界を少しだけ優しくする。
             </p>
-            <p>
-              <strong>そのリズムを誇って、世界と響き合おう。</strong>
-              <br />
-              <span className="text-sm text-zinc-500 dark:text-zinc-400">in the Humorverse.</span>
+            <p className="mt-3">
+              そのリズムを誇って、世界と響き合おう。<em> in the Humorverse.</em>
             </p>
-          </blockquote>
-        </div>
-      </section>
-    </>
+          </div>
+          <div className="mt-6">
+            <Link
+              href="/test"
+              className="inline-flex items-center rounded-xl px-5 py-3 bg-black text-white shadow hover:opacity-90"
+              data-analytics-id="cta_begin_from_vision"
+            >
+              診断をはじめる
+            </Link>
+          </div>
+        </Section>
+      </main>
+    </Layout>
   );
 }
