@@ -86,7 +86,7 @@ const sections = [
         <p>
           <code className="rounded bg-white/70 px-1.5 py-0.5 font-mono text-sm text-[#2B2B2B] shadow-sm">contact@humor-type16.example.com</code>
         </p>
-        <p>※ 小規模運営のため、ご質問の内容によってはお返事までお時間をいただく場合や、すべてにご回答できない場合があります。</p>
+        <p>※ 小規模運営のため、すべてにご回答できない場合があります。</p>
       </div>
     ),
   },
