@@ -9,7 +9,7 @@ export default function AboutPage() {
         <title>About | HumorType16</title>
         <meta
           name="description"
-          content="HumorType16は、ユーモアの“骨格”を4つの感性でひもとし、言葉にする自己理解の診断。つながり方や心地よい間合いが見えてきます。"
+          content="HumorType16は、ユーモアの“骨格”を4つの感性で紐解き、言葉にする自己理解の診断。つながり方や心地よい間合いが見えてきます。"
         />
       </Head>
 
@@ -111,7 +111,7 @@ export default function AboutPage() {
         <Section eyebrow="CLOSING" title="最後に">
           <p>
             自分のユーモアを言葉にできると、その場に合わせた伝え方や、人との距離の取り方がやさしく整います。
-            あなたらしいユーモアの感性を、ここから見つめてください。
+            あなたらしいユーモアの感性を、ここから見つけてください。
           </p>
           <div className="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-amber-900">
             <p className="text-sm">
