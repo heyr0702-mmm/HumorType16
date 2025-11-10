@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../components/Layout";
 import Section from "../components/Section";
 
 export default function VisionPage() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Vision | HumorType16</title>
         <meta
@@ -87,6 +86,6 @@ export default function VisionPage() {
           </div>
         </Section>
       </main>
-    </Layout>
+    </>
   );
 }
