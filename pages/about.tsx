@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../components/Layout";
 import Section from "../components/Section";
 
 export default function AboutPage() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>About | HumorType16</title>
         <meta
@@ -122,6 +121,6 @@ export default function AboutPage() {
           </div>
         </Section>
       </main>
-    </Layout>
+    </>
   );
 }
