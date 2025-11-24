@@ -6,8 +6,7 @@ import AdSenseLoader from "../../components/AdSenseLoader";
 import AdSlot from "../../components/AdSlot";
 import RewardedUnlock from "../../components/RewardedUnlock";
 import ResultHeader from "../../components/ResultHeader";
-import { HumorFamilyCode } from "../../components/HumorCharacterBadge";
-import { HUMOR_TYPES, HumorTypeDetail } from "../../data/humor-types";
+import { HUMOR_TYPES, HumorFamilyCode, HumorTypeDetail } from "../../data/humor-types";
 import { AxisKey } from "../../data/humor-questions";
 import { getNormalizedAxisValues } from "../../utils/scoring";
 
