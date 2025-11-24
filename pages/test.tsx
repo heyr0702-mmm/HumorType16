@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import Hero from "../components/Hero";
 import ProgressFooter from "../components/ProgressFooter";
 import HumorQuestion, { LikertValue } from "../components/HumorQuestion";
-import type { HumorFamilyCode } from "../components/HumorCharacterBadge";
+import type { HumorFamilyCode } from "../data/humor-types";
 import { HUMOR_QUESTIONS, AxisKey } from "../data/humor-questions";
 import { HUMOR_TYPES } from "../data/humor-types";
 import { trackEvent } from "@/utils/analytics";

@@ -16,6 +16,8 @@ export type HumorTypeCode =
   | "ICES"
   | "ICEP";
 
+export type HumorFamilyCode = "EA" | "EC" | "IA" | "IC";
+
 export interface HumorScene {
   label: string;
   description: string;
@@ -40,7 +42,7 @@ export interface HumorTypeDetail {
   axesBrief: string;
   scenes: HumorScene[];
   compatibility: HumorCompatibility[];
-  family?: "EA" | "EC" | "IA" | "IC";
+  family?: HumorFamilyCode;
 }
 
 export const HUMOR_TYPES: Record<string, HumorTypeDetail> = {

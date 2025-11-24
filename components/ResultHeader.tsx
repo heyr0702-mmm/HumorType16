@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import type { HumorTypeDetail } from "../data/humor-types";
-import type { HumorFamilyCode } from "./HumorCharacterBadge";
+import type { HumorFamilyCode, HumorTypeDetail } from "../data/humor-types";
 import { buildShareUrl, copyToClipboard } from "../utils/share";
 
 type CSSVarStyle = CSSProperties & {
